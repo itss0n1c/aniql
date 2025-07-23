@@ -1,0 +1,26 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+	"assist": { "actions": { "source": { "organizeImports": "off" } } },
+	"formatter": {
+		"enabled": true,
+		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!**/genql/*"],
+		"lineWidth": 120,
+		"indentWidth": 4,
+		"indentStyle": "tab"
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!**/genql/*"],
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "error"
+			}
+		}
+	}
+}

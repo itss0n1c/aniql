@@ -1,0 +1,45 @@
+{
+	"name": "aniql",
+	"version": "1.0.0",
+	"description": "A library for interacting with the AniList API.",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"files": [
+		"dist"
+	],
+	"keywords": [
+		"anilist",
+		"api",
+		"graphql",
+		"library",
+		"typescript"
+	],
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"dev": "bun test --watch",
+		"build:lib": "bun run build.ts",
+		"build:docs": "typedoc --options typedoc.json",
+		"build": "bun build:lib && bun build:docs"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.1.2",
+		"@types/bun": "1.2.19",
+		"typedoc-github-theme": "0.3.0",
+		"typescript": "5.8.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/itss0n1c/aniql.git"
+	},
+	"bugs": {
+		"url": "https://github.com/itss0n1c/aniql/issues"
+	},
+	"homepage": "https://s0n1c.ca/aniql"
+}
