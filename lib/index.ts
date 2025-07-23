@@ -12,8 +12,7 @@ import type { ClientOptions, FieldsSelection } from './genql/runtime';
 type Awaitable<T> = Promise<T> | T;
 
 /** A utility type to make an object type more readable by removing excess properties. */
-type Prettify<T> = { [K in keyof T]: T[K] } & {};
-
+type Prettify<T> = T extends object ? { [K in keyof T]: Prettify<T[K]> } & {} : T;
 /** Options for the AniQL client. */
 type AniQLOptions = ClientOptions & { get_token?: () => Awaitable<string | undefined> };
 
