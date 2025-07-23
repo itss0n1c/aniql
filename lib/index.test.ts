@@ -14,6 +14,9 @@ test('test:viewer', async () => {
 				large: true,
 				medium: true,
 			},
+			options: {
+				__scalar: true,
+			},
 		},
 	});
 	console.log(res.Viewer);
