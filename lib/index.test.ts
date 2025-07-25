@@ -3,7 +3,13 @@ import { AniQLClient } from '.';
 
 const client_id = Number.parseInt(Bun.env.CLIENT_ID ?? '');
 
-const client = new AniQLClient(client_id, { get_token: () => Bun.env.TOKEN });
+const client = new AniQLClient({
+	auth: {
+		response_type: 'token',
+		client_id,
+	},
+	get_token: () => Bun.env.TOKEN,
+});
 
 test('test:viewer', async () => {
 	const res = await client.query({
