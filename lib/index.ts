@@ -3,10 +3,7 @@ import { type ClientOptions, createFetcher, generateGraphqlOperation, linkTypeMa
 import types from './genql/types';
 
 /** Represents a value that can be awaited. */
-type Awaitable<T> = Promise<T> | T;
-
-/** A utility type to make an object type more readable by removing excess properties. */
-type Prettify<T> = T extends object ? { [K in keyof T]: Prettify<T[K]> } & {} : T;
+export type Awaitable<T> = Promise<T> | T;
 
 interface AniQLAuthBase {
 	client_id: number;
@@ -22,16 +19,16 @@ interface AniQLAuthResToken extends AniQLAuthBase {
 	response_type: 'token';
 }
 
-type AniQLAuth = Prettify<AniQLAuthResCode | AniQLAuthResToken>;
+export type AniQLAuth = AniQLAuthResCode | AniQLAuthResToken;
 
 /** Options for the AniQL client. */
-type AniQLOptions = ClientOptions & {
+export type AniQLOptions = ClientOptions & {
 	auth: AniQLAuth;
 	get_token?: () => Awaitable<string | undefined>;
 };
 
 /** Options for the request made by the AniQL client. */
-type RequestOptions = { token?: string };
+export type AniQLRequestOptions = { token?: string };
 
 /**
  * AniQLClient is a client for interacting with the AniList GraphQL API.
@@ -53,7 +50,7 @@ const _make_query = <R extends QueryGenqlSelection>(request: R & { __name?: stri
 const _make_mutation = <R extends QueryGenqlSelection>(request: R & { __name?: string }) =>
 	generateGraphqlOperation('mutation', typeMapMutation, request as any);
 
-class AniQLClient {
+export class AniQLClient {
 	_opts: AniQLOptions;
 	static base_url = 'https://graphql.anilist.co';
 
@@ -61,14 +58,16 @@ class AniQLClient {
 		this._opts = opts;
 	}
 
-	query<R extends QueryGenqlSelection>(request: R & { __name?: string }, opts?: RequestOptions) {
+	async query<R extends QueryGenqlSelection>(request: R & { __name?: string }, opts?: AniQLRequestOptions) {
 		const operation = _make_query(request);
-		return this._fetcher(opts?.token)(operation) as Promise<Prettify<FieldsSelection<Query, R>>>;
+		const res = (await this._fetcher(opts?.token)(operation)) as FieldsSelection<Query, R>;
+		return res;
 	}
 
-	mutation<R extends MutationGenqlSelection>(request: R & { __name?: string }, opts?: RequestOptions) {
+	async mutation<R extends MutationGenqlSelection>(request: R & { __name?: string }, opts?: AniQLRequestOptions) {
 		const operation = _make_mutation(request);
-		return this._fetcher(opts?.token)(operation) as Promise<Prettify<FieldsSelection<Mutation, R>>>;
+		const res = (await this._fetcher(opts?.token)(operation)) as FieldsSelection<Mutation, R>;
+		return res;
 	}
 
 	_fetcher(_token?: string) {
@@ -126,5 +125,3 @@ class AniQLClient {
 }
 
 export * from './genql';
-export { AniQLClient, type AniQLOptions, type Awaitable, type Prettify, type RequestOptions };
-
