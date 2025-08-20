@@ -1,7 +1,7 @@
 import { test } from 'bun:test';
 import { AniQLClient, type UserGenqlSelection } from '.';
 
-const client_id = Number.parseInt(Bun.env.CLIENT_ID ?? '');
+const client_id = Number.parseInt(Bun.env.CLIENT_ID ?? '', 10);
 
 const client = new AniQLClient({
 	auth: {
@@ -39,7 +39,7 @@ test('user:current', async () => {
 test('user:other', async () => {
 	const res = await client.query({
 		User: {
-			__args: { name: 'itss0n1c' },
+			__args: { name: 'warsame' },
 			...user_selection,
 		},
 	});

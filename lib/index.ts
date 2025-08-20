@@ -59,6 +59,8 @@ export interface AniQLClientEvents {
 	rate_limit: Array<(data: RateLimitData) => Awaitable<any>>;
 }
 
+const _parse_num = (str: string) => Number.parseInt(str, 10);
+
 /**
  * AniQLClient is a client for interacting with the AniList GraphQL API.
  * It allows you to perform queries and mutations against the AniList API.
@@ -83,7 +85,10 @@ export class AniQLClient {
 		return this;
 	}
 
-	#_rate_limit_send = (data: RateLimitData) => this.#_events.rate_limit.forEach((cb) => cb(data));
+	#_rate_limit_send = (data: RateLimitData) =>
+		this.#_events.rate_limit.forEach((cb) => {
+			cb(data);
+		});
 
 	#_rate_limit_handle = () => {
 		if (this.rate_limit.reset <= 0) clearInterval(this.#_emit_listener);
@@ -148,18 +153,18 @@ export class AniQLClient {
 					throw e;
 				}
 
-				const _limit = Number.parseInt(res.headers.get('x-ratelimit-limit') ?? '0');
-				const _remaining = Number.parseInt(res.headers.get('x-ratelimit-remaining') ?? '0');
+				const _limit = _parse_num(res.headers.get('x-ratelimit-limit') ?? '0');
+				const _remaining = _parse_num(res.headers.get('x-ratelimit-remaining') ?? '0');
 				const __reset = res.headers.get('x-ratelimit-reset');
 				let reset_count: number | undefined;
 				if (__reset) {
-					const _reset = Number.parseInt(__reset ?? '');
+					const _reset = _parse_num(__reset ?? '');
 					if (!Number.isNaN(_reset))
 						reset_count = Math.floor((new Date(_reset * 1000).getTime() - Date.now()) / 1000);
 				} else {
 					const retry_after = res.headers.get('retry-after');
 					if (retry_after) {
-						const _reset = Number.parseInt(retry_after ?? '');
+						const _reset = _parse_num(retry_after ?? '');
 						if (!Number.isNaN(_reset))
 							reset_count = Math.floor(
 								(new Date(Date.now() + _reset * 1000).getTime() - Date.now()) / 1000,
@@ -222,4 +227,9 @@ export class AniQLClient {
 	}
 }
 
-export * from './genql';
+export {
+	everything, generateGraphqlOperation,
+	GenqlError, type FieldsSelection, type GraphqlOperation
+} from './genql/runtime';
+export * from './genql/schema';
+

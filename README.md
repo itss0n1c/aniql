@@ -2,11 +2,10 @@
 
 ### A library for interacting with the AniList API.
 
-<a href="https://discord.gg/bMFPpxtMTe"><img src="https://img.shields.io/discord/977286501756968971?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
-<a href="https://www.npmjs.com/package/aniql"><img src="https://img.shields.io/npm/v/aniql?maxAge=3600" alt="npm version" /></a>
-<a href="https://www.npmjs.com/package/aniql"><img src="https://img.shields.io/npm/dt/aniql.svg?maxAge=3600" alt="npm downloads" /></a>
+<a href="https://www.npmjs.com/package/aniql"><img src="https://img.shields.io/npm/v/aniql?maxAge=600" alt="npm version" /></a>
+<a href="https://www.npmjs.com/package/aniql"><img src="https://img.shields.io/npm/dt/aniql.svg?maxAge=600" alt="npm downloads" /></a>
 
-### Documentation live at https://s0n1c.ca/aniql
+### Documentation live at https://warsame.me/aniql
 
 ## Installation
 
@@ -27,7 +26,7 @@ const client = new AniQLClient({
 
 const user = await client.query({
   User: {
-    __args: { name: "itss0n1c" },
+    __args: { name: "warsame" },
     id: true,
     name: true,
     avatar: {
