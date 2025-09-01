@@ -102,7 +102,7 @@ export class AniQLClient {
 		this.rate_limit = data;
 		if (this.rate_limit.reset >= 1) {
 			this.#_rate_limit_handle();
-			this.#_emit_listener = setInterval.bind(this, this.#_rate_limit_handle, 1000)();
+			this.#_emit_listener = setInterval(() => this.#_rate_limit_handle(), 1000);
 		}
 		this.#_rate_limit_send(data);
 	}
@@ -228,8 +228,11 @@ export class AniQLClient {
 }
 
 export {
-	everything, generateGraphqlOperation,
-	GenqlError, type FieldsSelection, type GraphqlOperation
+	everything,
+	generateGraphqlOperation,
+	GenqlError,
+	type FieldsSelection,
+	type GraphqlOperation
 } from './genql/runtime';
 export * from './genql/schema';
 
