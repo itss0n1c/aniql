@@ -33,7 +33,7 @@ export interface Client {
 
 export const createClient = function (options?: ClientOptions): Client {
   return createClientOriginal({
-    url: 'https://graphql.anilist.co/',
+    url: 'https://graphql.anilist.co',
 
     ...options,
     queryRoot: typeMap.Query!,

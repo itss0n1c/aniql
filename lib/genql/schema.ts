@@ -48,9 +48,9 @@ export interface Query {
     Activity: (ActivityUnion | null)
     /** Activity reply query */
     ActivityReply: (ActivityReply | null)
-    /** Follow query */
+    /** Following query */
     Following: (User | null)
-    /** Follow query */
+    /** Follower query */
     Follower: (User | null)
     /** Thread query */
     Thread: (Thread | null)
@@ -223,7 +223,7 @@ export interface NotificationOption {
 
 
 /** Notification type enum */
-export type NotificationType = 'ACTIVITY_MESSAGE' | 'ACTIVITY_REPLY' | 'FOLLOWING' | 'ACTIVITY_MENTION' | 'THREAD_COMMENT_MENTION' | 'THREAD_SUBSCRIBED' | 'THREAD_COMMENT_REPLY' | 'AIRING' | 'ACTIVITY_LIKE' | 'ACTIVITY_REPLY_LIKE' | 'THREAD_LIKE' | 'THREAD_COMMENT_LIKE' | 'ACTIVITY_REPLY_SUBSCRIBED' | 'RELATED_MEDIA_ADDITION' | 'MEDIA_DATA_CHANGE' | 'MEDIA_MERGE' | 'MEDIA_DELETION'
+export type NotificationType = 'ACTIVITY_MESSAGE' | 'ACTIVITY_REPLY' | 'FOLLOWING' | 'ACTIVITY_MENTION' | 'THREAD_COMMENT_MENTION' | 'THREAD_SUBSCRIBED' | 'THREAD_COMMENT_REPLY' | 'AIRING' | 'ACTIVITY_LIKE' | 'ACTIVITY_REPLY_LIKE' | 'THREAD_LIKE' | 'THREAD_COMMENT_LIKE' | 'ACTIVITY_REPLY_SUBSCRIBED' | 'RELATED_MEDIA_ADDITION' | 'MEDIA_DATA_CHANGE' | 'MEDIA_MERGE' | 'MEDIA_DELETION' | 'MEDIA_SUBMISSION_UPDATE' | 'STAFF_SUBMISSION_UPDATE' | 'CHARACTER_SUBMISSION_UPDATE'
 
 
 /** The language the user wants to see staff and character names in */
@@ -1453,7 +1453,7 @@ export type AiringSort = 'ID' | 'ID_DESC' | 'MEDIA_ID' | 'MEDIA_ID_DESC' | 'TIME
 
 
 /** Notification union type */
-export type NotificationUnion = (AiringNotification | FollowingNotification | ActivityMessageNotification | ActivityMentionNotification | ActivityReplyNotification | ActivityReplySubscribedNotification | ActivityLikeNotification | ActivityReplyLikeNotification | ThreadCommentMentionNotification | ThreadCommentReplyNotification | ThreadCommentSubscribedNotification | ThreadCommentLikeNotification | ThreadLikeNotification | RelatedMediaAdditionNotification | MediaDataChangeNotification | MediaMergeNotification | MediaDeletionNotification) & { __isUnion?: true }
+export type NotificationUnion = (AiringNotification | FollowingNotification | ActivityMessageNotification | ActivityMentionNotification | ActivityReplyNotification | ActivityReplySubscribedNotification | ActivityLikeNotification | ActivityReplyLikeNotification | ThreadCommentMentionNotification | ThreadCommentReplyNotification | ThreadCommentSubscribedNotification | ThreadCommentLikeNotification | ThreadLikeNotification | RelatedMediaAdditionNotification | MediaDataChangeNotification | MediaMergeNotification | MediaDeletionNotification | MediaSubmissionUpdateNotification | StaffSubmissionUpdateNotification | CharacterSubmissionUpdateNotification) & { __isUnion?: true }
 
 
 /** Notification for when an episode of anime airs */
@@ -2063,6 +2063,68 @@ export interface MediaDeletionNotification {
     /** The time the notification was created at */
     createdAt: (Scalars['Int'] | null)
     __typename: 'MediaDeletionNotification'
+}
+
+
+/** Notification for when a media submission is accepted, partially accepted, or rejected */
+export interface MediaSubmissionUpdateNotification {
+    /** The id of the Notification */
+    id: Scalars['Int']
+    /** The type of notification */
+    type: (NotificationType | null)
+    /** The notification context text */
+    contexts: ((Scalars['String'] | null)[] | null)
+    /** The status of the submission */
+    status: (Scalars['String'] | null)
+    /** The notes of the submission */
+    notes: (Scalars['String'] | null)
+    /** The time the notification was created at */
+    createdAt: (Scalars['Int'] | null)
+    /** The media that was created or modified. If this submission was to create a new media and it was rejected, this will be null. */
+    media: (Media | null)
+    /** The title of the media that was submitted. If this submission was to edit an existing media, this will be null. */
+    submittedTitle: (Scalars['String'] | null)
+    __typename: 'MediaSubmissionUpdateNotification'
+}
+
+
+/** Notification for when a staff submission is accepted, partially accepted, or rejected */
+export interface StaffSubmissionUpdateNotification {
+    /** The id of the Notification */
+    id: Scalars['Int']
+    /** The type of notification */
+    type: (NotificationType | null)
+    /** The notification context text */
+    contexts: ((Scalars['String'] | null)[] | null)
+    /** The status of the submission */
+    status: (Scalars['String'] | null)
+    /** The notes of the submission */
+    notes: (Scalars['String'] | null)
+    /** The time the notification was created at */
+    createdAt: (Scalars['Int'] | null)
+    /** The staff that was modified. */
+    staff: (Staff | null)
+    __typename: 'StaffSubmissionUpdateNotification'
+}
+
+
+/** Notification for when a character submission is accepted, partially accepted, or rejected */
+export interface CharacterSubmissionUpdateNotification {
+    /** The id of the Notification */
+    id: Scalars['Int']
+    /** The type of notification */
+    type: (NotificationType | null)
+    /** The notification context text */
+    contexts: ((Scalars['String'] | null)[] | null)
+    /** The status of the submission */
+    status: (Scalars['String'] | null)
+    /** The notes of the submission */
+    notes: (Scalars['String'] | null)
+    /** The time the notification was created at */
+    createdAt: (Scalars['Int'] | null)
+    /** The character that was modified. */
+    character: (Character | null)
+    __typename: 'CharacterSubmissionUpdateNotification'
 }
 
 
@@ -2985,13 +3047,13 @@ export interface QueryGenqlSelection{
     id?: (Scalars['Int'] | null), 
     /** Filter by the parent id */
     activityId?: (Scalars['Int'] | null)} })
-    /** Follow query */
+    /** Following query */
     Following?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
     userId: Scalars['Int'], 
     /** The order the results will be returned in */
     sort?: ((UserSort | null)[] | null)} })
-    /** Follow query */
+    /** Follower query */
     Follower?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
     userId: Scalars['Int'], 
@@ -4983,6 +5045,9 @@ export interface NotificationUnionGenqlSelection{
     on_MediaDataChangeNotification?:MediaDataChangeNotificationGenqlSelection,
     on_MediaMergeNotification?:MediaMergeNotificationGenqlSelection,
     on_MediaDeletionNotification?:MediaDeletionNotificationGenqlSelection,
+    on_MediaSubmissionUpdateNotification?:MediaSubmissionUpdateNotificationGenqlSelection,
+    on_StaffSubmissionUpdateNotification?:StaffSubmissionUpdateNotificationGenqlSelection,
+    on_CharacterSubmissionUpdateNotification?:CharacterSubmissionUpdateNotificationGenqlSelection,
     __typename?: boolean | number
 }
 
@@ -5627,6 +5692,71 @@ export interface MediaDeletionNotificationGenqlSelection{
     reason?: boolean | number
     /** The time the notification was created at */
     createdAt?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** Notification for when a media submission is accepted, partially accepted, or rejected */
+export interface MediaSubmissionUpdateNotificationGenqlSelection{
+    /** The id of the Notification */
+    id?: boolean | number
+    /** The type of notification */
+    type?: boolean | number
+    /** The notification context text */
+    contexts?: boolean | number
+    /** The status of the submission */
+    status?: boolean | number
+    /** The notes of the submission */
+    notes?: boolean | number
+    /** The time the notification was created at */
+    createdAt?: boolean | number
+    /** The media that was created or modified. If this submission was to create a new media and it was rejected, this will be null. */
+    media?: MediaGenqlSelection
+    /** The title of the media that was submitted. If this submission was to edit an existing media, this will be null. */
+    submittedTitle?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** Notification for when a staff submission is accepted, partially accepted, or rejected */
+export interface StaffSubmissionUpdateNotificationGenqlSelection{
+    /** The id of the Notification */
+    id?: boolean | number
+    /** The type of notification */
+    type?: boolean | number
+    /** The notification context text */
+    contexts?: boolean | number
+    /** The status of the submission */
+    status?: boolean | number
+    /** The notes of the submission */
+    notes?: boolean | number
+    /** The time the notification was created at */
+    createdAt?: boolean | number
+    /** The staff that was modified. */
+    staff?: StaffGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** Notification for when a character submission is accepted, partially accepted, or rejected */
+export interface CharacterSubmissionUpdateNotificationGenqlSelection{
+    /** The id of the Notification */
+    id?: boolean | number
+    /** The type of notification */
+    type?: boolean | number
+    /** The notification context text */
+    contexts?: boolean | number
+    /** The status of the submission */
+    status?: boolean | number
+    /** The notes of the submission */
+    notes?: boolean | number
+    /** The time the notification was created at */
+    createdAt?: boolean | number
+    /** The character that was modified. */
+    character?: CharacterGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -7517,7 +7647,7 @@ export interface UserModDataGenqlSelection{
     
 
 
-    const NotificationUnion_possibleTypes: string[] = ['AiringNotification','FollowingNotification','ActivityMessageNotification','ActivityMentionNotification','ActivityReplyNotification','ActivityReplySubscribedNotification','ActivityLikeNotification','ActivityReplyLikeNotification','ThreadCommentMentionNotification','ThreadCommentReplyNotification','ThreadCommentSubscribedNotification','ThreadCommentLikeNotification','ThreadLikeNotification','RelatedMediaAdditionNotification','MediaDataChangeNotification','MediaMergeNotification','MediaDeletionNotification']
+    const NotificationUnion_possibleTypes: string[] = ['AiringNotification','FollowingNotification','ActivityMessageNotification','ActivityMentionNotification','ActivityReplyNotification','ActivityReplySubscribedNotification','ActivityLikeNotification','ActivityReplyLikeNotification','ThreadCommentMentionNotification','ThreadCommentReplyNotification','ThreadCommentSubscribedNotification','ThreadCommentLikeNotification','ThreadLikeNotification','RelatedMediaAdditionNotification','MediaDataChangeNotification','MediaMergeNotification','MediaDeletionNotification','MediaSubmissionUpdateNotification','StaffSubmissionUpdateNotification','CharacterSubmissionUpdateNotification']
     export const isNotificationUnion = (obj?: { __typename?: any } | null): obj is NotificationUnion => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isNotificationUnion"')
       return NotificationUnion_possibleTypes.includes(obj.__typename)
@@ -7721,6 +7851,30 @@ export interface UserModDataGenqlSelection{
     export const isMediaDeletionNotification = (obj?: { __typename?: any } | null): obj is MediaDeletionNotification => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isMediaDeletionNotification"')
       return MediaDeletionNotification_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const MediaSubmissionUpdateNotification_possibleTypes: string[] = ['MediaSubmissionUpdateNotification']
+    export const isMediaSubmissionUpdateNotification = (obj?: { __typename?: any } | null): obj is MediaSubmissionUpdateNotification => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isMediaSubmissionUpdateNotification"')
+      return MediaSubmissionUpdateNotification_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const StaffSubmissionUpdateNotification_possibleTypes: string[] = ['StaffSubmissionUpdateNotification']
+    export const isStaffSubmissionUpdateNotification = (obj?: { __typename?: any } | null): obj is StaffSubmissionUpdateNotification => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isStaffSubmissionUpdateNotification"')
+      return StaffSubmissionUpdateNotification_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const CharacterSubmissionUpdateNotification_possibleTypes: string[] = ['CharacterSubmissionUpdateNotification']
+    export const isCharacterSubmissionUpdateNotification = (obj?: { __typename?: any } | null): obj is CharacterSubmissionUpdateNotification => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isCharacterSubmissionUpdateNotification"')
+      return CharacterSubmissionUpdateNotification_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -7954,7 +8108,10 @@ export const enumNotificationType = {
    RELATED_MEDIA_ADDITION: 'RELATED_MEDIA_ADDITION' as const,
    MEDIA_DATA_CHANGE: 'MEDIA_DATA_CHANGE' as const,
    MEDIA_MERGE: 'MEDIA_MERGE' as const,
-   MEDIA_DELETION: 'MEDIA_DELETION' as const
+   MEDIA_DELETION: 'MEDIA_DELETION' as const,
+   MEDIA_SUBMISSION_UPDATE: 'MEDIA_SUBMISSION_UPDATE' as const,
+   STAFF_SUBMISSION_UPDATE: 'STAFF_SUBMISSION_UPDATE' as const,
+   CHARACTER_SUBMISSION_UPDATE: 'CHARACTER_SUBMISSION_UPDATE' as const
 }
 
 export const enumUserStaffNameLanguage = {

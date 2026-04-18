@@ -235,4 +235,3 @@ export {
 	type GraphqlOperation
 } from './genql/runtime';
 export * from './genql/schema';
-

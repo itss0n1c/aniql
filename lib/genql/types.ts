@@ -37,17 +37,17 @@ export default {
         111,
         112,
         118,
-        140,
-        141,
-        142,
         143,
-        149,
-        153,
-        163,
-        164,
-        172,
+        144,
+        145,
+        146,
+        152,
+        156,
+        166,
+        167,
         175,
-        184
+        178,
+        187
     ],
     "types": {
         "Query": {
@@ -589,7 +589,7 @@ export default {
                 }
             ],
             "MediaListCollection": [
-                144,
+                147,
                 {
                     "userId": [
                         1
@@ -848,7 +848,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        140,
+                        143,
                         "[ActivitySort]"
                     ]
                 }
@@ -919,7 +919,7 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        141,
+                        144,
                         "[ThreadSort]"
                     ]
                 }
@@ -937,7 +937,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        142,
+                        145,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -982,12 +982,12 @@ export default {
                         1
                     ],
                     "type": [
-                        143
+                        146
                     ]
                 }
             ],
             "Markdown": [
-                146,
+                149,
                 {
                     "markdown": [
                         5,
@@ -996,10 +996,10 @@ export default {
                 }
             ],
             "AniChartUser": [
-                147
+                150
             ],
             "SiteStatistics": [
-                148
+                151
             ],
             "ExternalLinkSourceCollection": [
                 62,
@@ -1011,7 +1011,7 @@ export default {
                         63
                     ],
                     "mediaType": [
-                        153
+                        156
                     ]
                 }
             ],
@@ -1730,7 +1730,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        140,
+                        143,
                         "[ActivitySort]"
                     ]
                 }
@@ -1775,7 +1775,7 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        141,
+                        144,
                         "[ThreadSort]"
                     ]
                 }
@@ -1793,7 +1793,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        142,
+                        145,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -1859,7 +1859,7 @@ export default {
                         1
                     ],
                     "type": [
-                        143
+                        146
                     ]
                 }
             ],
@@ -4247,6 +4247,15 @@ export default {
             "on_MediaDeletionNotification": [
                 139
             ],
+            "on_MediaSubmissionUpdateNotification": [
+                140
+            ],
+            "on_StaffSubmissionUpdateNotification": [
+                141
+            ],
+            "on_CharacterSubmissionUpdateNotification": [
+                142
+            ],
             "__typename": [
                 5
             ]
@@ -5098,13 +5107,94 @@ export default {
                 5
             ]
         },
+        "MediaSubmissionUpdateNotification": {
+            "id": [
+                1
+            ],
+            "type": [
+                13
+            ],
+            "contexts": [
+                5
+            ],
+            "status": [
+                5
+            ],
+            "notes": [
+                5
+            ],
+            "createdAt": [
+                1
+            ],
+            "media": [
+                23
+            ],
+            "submittedTitle": [
+                5
+            ],
+            "__typename": [
+                5
+            ]
+        },
+        "StaffSubmissionUpdateNotification": {
+            "id": [
+                1
+            ],
+            "type": [
+                13
+            ],
+            "contexts": [
+                5
+            ],
+            "status": [
+                5
+            ],
+            "notes": [
+                5
+            ],
+            "createdAt": [
+                1
+            ],
+            "staff": [
+                45
+            ],
+            "__typename": [
+                5
+            ]
+        },
+        "CharacterSubmissionUpdateNotification": {
+            "id": [
+                1
+            ],
+            "type": [
+                13
+            ],
+            "contexts": [
+                5
+            ],
+            "status": [
+                5
+            ],
+            "notes": [
+                5
+            ],
+            "createdAt": [
+                1
+            ],
+            "character": [
+                39
+            ],
+            "__typename": [
+                5
+            ]
+        },
         "ActivitySort": {},
         "ThreadSort": {},
         "ThreadCommentSort": {},
         "LikeableType": {},
         "MediaListCollection": {
             "lists": [
-                145
+                148
             ],
             "user": [
                 7
@@ -5176,10 +5266,10 @@ export default {
         },
         "SiteStatistics": {
             "users": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5191,10 +5281,10 @@ export default {
                 }
             ],
             "anime": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5206,10 +5296,10 @@ export default {
                 }
             ],
             "manga": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5221,10 +5311,10 @@ export default {
                 }
             ],
             "characters": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5236,10 +5326,10 @@ export default {
                 }
             ],
             "staff": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5251,10 +5341,10 @@ export default {
                 }
             ],
             "studios": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5266,10 +5356,10 @@ export default {
                 }
             ],
             "reviews": [
-                150,
+                153,
                 {
                     "sort": [
-                        149,
+                        152,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5287,10 +5377,10 @@ export default {
         "SiteTrendSort": {},
         "SiteTrendConnection": {
             "edges": [
-                151
+                154
             ],
             "nodes": [
-                152
+                155
             ],
             "pageInfo": [
                 3
@@ -5301,7 +5391,7 @@ export default {
         },
         "SiteTrendEdge": {
             "node": [
-                152
+                155
             ],
             "__typename": [
                 5
@@ -5351,7 +5441,7 @@ export default {
                         5
                     ],
                     "notificationOptions": [
-                        155,
+                        158,
                         "[NotificationOptionInput]"
                     ],
                     "timezone": [
@@ -5361,10 +5451,10 @@ export default {
                         1
                     ],
                     "animeListOptions": [
-                        156
+                        159
                     ],
                     "mangaListOptions": [
-                        156
+                        159
                     ],
                     "staffNameLanguage": [
                         14
@@ -5373,7 +5463,7 @@ export default {
                         4
                     ],
                     "disabledListActivity": [
-                        157,
+                        160,
                         "[ListActivityOptionInput]"
                     ]
                 }
@@ -5426,10 +5516,10 @@ export default {
                         "[Float]"
                     ],
                     "startedAt": [
-                        158
+                        161
                     ],
                     "completedAt": [
-                        158
+                        161
                     ]
                 }
             ],
@@ -5471,10 +5561,10 @@ export default {
                         "[Float]"
                     ],
                     "startedAt": [
-                        158
+                        161
                     ],
                     "completedAt": [
-                        158
+                        161
                     ],
                     "ids": [
                         1,
@@ -5483,7 +5573,7 @@ export default {
                 }
             ],
             "DeleteMediaListEntry": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5491,7 +5581,7 @@ export default {
                 }
             ],
             "DeleteCustomList": [
-                159,
+                162,
                 {
                     "customList": [
                         5
@@ -5550,7 +5640,7 @@ export default {
                 }
             ],
             "DeleteActivity": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5597,7 +5687,7 @@ export default {
                 }
             ],
             "DeleteActivityReply": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5611,18 +5701,18 @@ export default {
                         1
                     ],
                     "type": [
-                        143
+                        146
                     ]
                 }
             ],
             "ToggleLikeV2": [
-                160,
+                163,
                 {
                     "id": [
                         1
                     ],
                     "type": [
-                        143
+                        146
                     ]
                 }
             ],
@@ -5723,7 +5813,7 @@ export default {
                 }
             ],
             "DeleteReview": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5784,7 +5874,7 @@ export default {
                 }
             ],
             "DeleteThread": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5823,7 +5913,7 @@ export default {
                 }
             ],
             "DeleteThreadComment": [
-                159,
+                162,
                 {
                     "id": [
                         1
@@ -5851,7 +5941,7 @@ export default {
                 9,
                 {
                     "highlights": [
-                        161,
+                        164,
                         "[AniChartHighlightInput]"
                     ]
                 }
@@ -5963,7 +6053,7 @@ export default {
         },
         "InternalPage": {
             "mediaSubmissions": [
-                165,
+                168,
                 {
                     "mediaId": [
                         1
@@ -5978,19 +6068,19 @@ export default {
                         1
                     ],
                     "status": [
-                        163
+                        166
                     ],
                     "type": [
                         25
                     ],
                     "sort": [
-                        164,
+                        167,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "characterSubmissions": [
-                169,
+                172,
                 {
                     "characterId": [
                         1
@@ -6002,16 +6092,16 @@ export default {
                         1
                     ],
                     "status": [
-                        163
+                        166
                     ],
                     "sort": [
-                        164,
+                        167,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "staffSubmissions": [
-                170,
+                173,
                 {
                     "staffId": [
                         1
@@ -6023,16 +6113,16 @@ export default {
                         1
                     ],
                     "status": [
-                        163
+                        166
                     ],
                     "sort": [
-                        164,
+                        167,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "revisionHistory": [
-                171,
+                174,
                 {
                     "userId": [
                         1
@@ -6052,7 +6142,7 @@ export default {
                 }
             ],
             "reports": [
-                173,
+                176,
                 {
                     "reporterId": [
                         1
@@ -6063,7 +6153,7 @@ export default {
                 }
             ],
             "modActions": [
-                174,
+                177,
                 {
                     "userId": [
                         1
@@ -6790,7 +6880,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        140,
+                        143,
                         "[ActivitySort]"
                     ]
                 }
@@ -6835,7 +6925,7 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        141,
+                        144,
                         "[ThreadSort]"
                     ]
                 }
@@ -6853,7 +6943,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        142,
+                        145,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -6919,7 +7009,7 @@ export default {
                         1
                     ],
                     "type": [
-                        143
+                        146
                     ]
                 }
             ],
@@ -6940,7 +7030,7 @@ export default {
                 7
             ],
             "status": [
-                163
+                166
             ],
             "submitterStats": [
                 9
@@ -6964,19 +7054,19 @@ export default {
                 23
             ],
             "characters": [
-                166
+                169
             ],
             "staff": [
-                166
+                169
             ],
             "studios": [
-                166
+                169
             ],
             "relations": [
                 22
             ],
             "externalLinks": [
-                166
+                169
             ],
             "createdAt": [
                 1
@@ -6987,10 +7077,10 @@ export default {
         },
         "MediaSubmissionComparison": {
             "submission": [
-                167
+                170
             ],
             "character": [
-                168
+                171
             ],
             "staff": [
                 50
@@ -7101,7 +7191,7 @@ export default {
                 7
             ],
             "status": [
-                163
+                166
             ],
             "notes": [
                 5
@@ -7136,7 +7226,7 @@ export default {
                 7
             ],
             "status": [
-                163
+                166
             ],
             "notes": [
                 5
@@ -7159,7 +7249,7 @@ export default {
                 1
             ],
             "action": [
-                172
+                175
             ],
             "changes": [
                 9
@@ -7224,7 +7314,7 @@ export default {
                 7
             ],
             "type": [
-                175
+                178
             ],
             "objectId": [
                 1
@@ -7310,10 +7400,10 @@ export default {
         },
         "CharacterSubmissionConnection": {
             "edges": [
-                181
+                184
             ],
             "nodes": [
-                169
+                172
             ],
             "pageInfo": [
                 3
@@ -7324,7 +7414,7 @@ export default {
         },
         "CharacterSubmissionEdge": {
             "node": [
-                169
+                172
             ],
             "role": [
                 36
@@ -7333,7 +7423,7 @@ export default {
                 45
             ],
             "submittedVoiceActors": [
-                170
+                173
             ],
             "__typename": [
                 5
