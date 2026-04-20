@@ -1,7 +1,7 @@
 {
 	"name": "aniql",
 	"description": "A library for interacting with the AniList API.",
-	"version": "1.3.3",
+	"version": "1.3.4",
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
