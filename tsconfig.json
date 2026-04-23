@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "declaration": true,
-        "forceConsistentCasingInFileNames": true,
-        "lib": ["ESNext", "DOM"],
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "resolveJsonModule": true,
-        "target": "ESNext",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "types": ["bun"]
-    },
-    "exclude": ["dist/", "node_modules", "**/node_modules/*"]
+	"compilerOptions": {
+		"noEmit": true,
+		"declaration": false,
+		"lib": ["ESNext", "DOM"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"target": "ESNext",
+		"skipLibCheck": true,
+		"strict": true,
+		"allowImportingTsExtensions": true,
+		"erasableSyntaxOnly": true,
+		"types": ["*"]
+	},
+	"exclude": ["dist/", "node_modules", "**/node_modules/*"]
 }

@@ -232,6 +232,6 @@ export {
 	generateGraphqlOperation,
 	GenqlError,
 	type FieldsSelection,
-	type GraphqlOperation
+	type GraphqlOperation,
 } from './genql/runtime';
 export * from './genql/schema';

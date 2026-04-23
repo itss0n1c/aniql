@@ -1,26 +1,32 @@
+import arkenv from 'arkenv';
 import { test } from 'bun:test';
 import { AniQLClient, type UserGenqlSelection } from '.';
 
-const client_id = Number.parseInt(Bun.env.CLIENT_ID ?? '', 10);
+const env = arkenv({
+	CLIENT_ID: 'string',
+	TOKEN: 'string',
+});
+
+const client_id = Number.parseInt(env.CLIENT_ID ?? '', 10);
 
 const client = new AniQLClient({
 	auth: {
 		response_type: 'token',
 		client_id,
 	},
-	get_token: () => Bun.env.TOKEN,
+	get_token: () => env.TOKEN,
 });
 
-test('rate_limit', async () => {
-	client.on('rate_limit', (data) => {
-		console.log(`Rate limit: ${data.limit}, Remaining: ${data.remaining}, Reset in: ${data.reset} seconds`);
-	});
+// test('rate_limit', async () => {
+// 	client.on('rate_limit', (data) => {
+// 		console.log(`Rate limit: ${data.limit}, Remaining: ${data.remaining}, Reset in: ${data.reset} seconds`);
+// 	});
 
-	const query = client.make_query({ Viewer: { id: true } });
-	for await (const _ of Array.from({ length: 100 })) {
-		await client.query(query);
-	}
-});
+// 	const query = client.make_query({ Viewer: { id: true } });
+// 	for await (const _ of Array.from({ length: 100 })) {
+// 		await client.query(query);
+// 	}
+// });
 
 const user_selection = {
 	id: true,
@@ -39,7 +45,7 @@ test('user:current', async () => {
 test('user:other', async () => {
 	const res = await client.query({
 		User: {
-			__args: { name: 'warsame' },
+			__args: { name: 'itss0n1c' },
 			...user_selection,
 		},
 	});
