@@ -1,9 +1,11 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
-	"assist": { "actions": { "source": { "organizeImports": "off" } } },
+	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"files": {
+		"includes": ["**", "!!dist", "!!docs", "!!**/genql/*"]
+	},
 	"formatter": {
 		"enabled": true,
-		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!**/genql/*"],
 		"lineWidth": 120,
 		"indentWidth": 4,
 		"indentStyle": "tab"
@@ -15,14 +17,19 @@
 	},
 	"linter": {
 		"enabled": true,
-		"includes": ["**", "!**/node_modules/*", "!**/dist/*", "!**/genql/*"],
 		"rules": {
 			"recommended": true,
-			"correctness": {
-				"noUnusedImports": "error"
-			},
 			"suspicious": {
-				"noExplicitAny": "off"
+				"noAssignInExpressions": "off"
+			},
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error",
+				"useImportExtensions": "error"
+			},
+			"style": {
+				"noParameterAssign": "off",
+				"useExportType": "error"
 			}
 		}
 	}

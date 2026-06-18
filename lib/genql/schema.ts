@@ -71,7 +71,7 @@ export interface Query {
 }
 
 
-/** Page of data */
+/** Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter. */
 export interface Page {
     /** The pagination information */
     pageInfo: (PageInfo | null)
@@ -1538,6 +1538,8 @@ export interface MessageActivity {
     likeCount: Scalars['Int']
     /** If the currently authenticated user liked the activity */
     isLiked: (Scalars['Boolean'] | null)
+    /** If the activity is pinned to the top of the users activity feed */
+    isPinned: (Scalars['Boolean'] | null)
     /** If the message is private and only viewable to the sender and recipients */
     isPrivate: (Scalars['Boolean'] | null)
     /** The url for the activity page on the AniList website */
@@ -2310,7 +2312,7 @@ export interface Deleted {
 export type LikeableUnion = (ListActivity | TextActivity | MessageActivity | ActivityReply | Thread | ThreadComment) & { __isUnion?: true }
 
 
-/** Page of data (Used for internal use only) */
+/** Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter. */
 export interface InternalPage {
     mediaSubmissions: ((MediaSubmission | null)[] | null)
     characterSubmissions: ((CharacterSubmission | null)[] | null)
@@ -2629,15 +2631,15 @@ export interface QueryGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the media id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's MyAnimeList id */
     idMal_not?: (Scalars['Int'] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the start date of the media */
     startDate_greater?: (Scalars['FuzzyDateInt'] | null), 
@@ -2651,17 +2653,17 @@ export interface QueryGenqlSelection{
     endDate_lesser?: (Scalars['FuzzyDateInt'] | null), 
     /** Filter by the end date of the media */
     endDate_like?: (Scalars['String'] | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_in?: ((MediaFormat | null)[] | null), 
     /** Filter by the media's format */
     format_not?: (MediaFormat | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_not_in?: ((MediaFormat | null)[] | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_in?: ((MediaStatus | null)[] | null), 
     /** Filter by the media's current release status */
     status_not?: (MediaStatus | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_not_in?: ((MediaStatus | null)[] | null), 
     /** Filter by amount of episodes the media has */
     episodes_greater?: (Scalars['Int'] | null), 
@@ -2679,21 +2681,21 @@ export interface QueryGenqlSelection{
     volumes_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's volume count */
     volumes_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites name with a online streaming or reading license */
+    /** Filter media by sites name with a online streaming or reading license (max 10,000 items) */
     licensedBy_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites id with a online streaming or reading license */
+    /** Filter media by sites id with a online streaming or reading license (max 10,000 items) */
     licensedById_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's average score */
     averageScore_not?: (Scalars['Int'] | null), 
@@ -2707,7 +2709,7 @@ export interface QueryGenqlSelection{
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the source type of the media */
+    /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
@@ -2729,9 +2731,9 @@ export interface QueryGenqlSelection{
     releasing?: (Scalars['Boolean'] | null), 
     /** Filter by the media id */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by date */
     date_greater?: (Scalars['Int'] | null), 
@@ -2777,21 +2779,21 @@ export interface QueryGenqlSelection{
     notYetAired?: (Scalars['Boolean'] | null), 
     /** Filter by the id of the airing schedule item */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of associated media */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_not?: (Scalars['Int'] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_greater?: (Scalars['Int'] | null), 
@@ -2813,9 +2815,9 @@ export interface QueryGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by character id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((CharacterSort | null)[] | null)} })
@@ -2829,9 +2831,9 @@ export interface QueryGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the staff id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StaffSort | null)[] | null)} })
@@ -2859,17 +2861,17 @@ export interface QueryGenqlSelection{
     completedAt?: (Scalars['FuzzyDateInt'] | null), 
     /** Limit to only entries also on the auth user's list. Requires user id or name arguments. */
     compareWithAuthList?: (Scalars['Boolean'] | null), 
-    /** Filter by a user's id */
+    /** Filter by a user's id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_in?: ((MediaListStatus | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_not_in?: ((MediaListStatus | null)[] | null), 
     /** Filter by the watching/reading status */
     status_not?: (MediaListStatus | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by note words and #tags */
     notes_like?: (Scalars['String'] | null), 
@@ -2909,9 +2911,9 @@ export interface QueryGenqlSelection{
     chunk?: (Scalars['Int'] | null), 
     /** The amount of entries per chunk, max 500 */
     perChunk?: (Scalars['Int'] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_in?: ((MediaListStatus | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_not_in?: ((MediaListStatus | null)[] | null), 
     /** Filter by the watching/reading status */
     status_not?: (MediaListStatus | null), 
@@ -2957,7 +2959,7 @@ export interface QueryGenqlSelection{
     type?: (NotificationType | null), 
     /** Reset the unread notification count to 0 on load */
     resetNotificationCount?: (Scalars['Boolean'] | null), 
-    /** Filter by the type of notifications */
+    /** Filter by the type of notifications (max 10,000 items) */
     type_in?: ((NotificationType | null)[] | null)} })
     /** Studio query */
     Studio?: (StudioGenqlSelection & { __args?: {
@@ -2967,9 +2969,9 @@ export interface QueryGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the studio id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StudioSort | null)[] | null)} })
@@ -3007,33 +3009,33 @@ export interface QueryGenqlSelection{
     createdAt?: (Scalars['Int'] | null), 
     /** Filter by the activity id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the owner user id */
     userId_not?: (Scalars['Int'] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of the user who sent a message */
     messengerId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the associated media id of the activity */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the type of activity */
     type_not?: (ActivityType | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_in?: ((ActivityType | null)[] | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_not_in?: ((ActivityType | null)[] | null), 
     /** Filter by the time the activity was created */
     createdAt_greater?: (Scalars['Int'] | null), 
@@ -3075,7 +3077,7 @@ export interface QueryGenqlSelection{
     mediaCategoryId?: (Scalars['Int'] | null), 
     /** Filter by search query */
     search?: (Scalars['String'] | null), 
-    /** Filter by the thread id */
+    /** Filter by the thread id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((ThreadSort | null)[] | null)} })
@@ -3131,7 +3133,7 @@ export interface QueryGenqlSelection{
 }
 
 
-/** Page of data */
+/** Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter. */
 export interface PageGenqlSelection{
     /** The pagination information */
     pageInfo?: PageInfoGenqlSelection
@@ -3203,15 +3205,15 @@ export interface PageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the media id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's MyAnimeList id */
     idMal_not?: (Scalars['Int'] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the start date of the media */
     startDate_greater?: (Scalars['FuzzyDateInt'] | null), 
@@ -3225,17 +3227,17 @@ export interface PageGenqlSelection{
     endDate_lesser?: (Scalars['FuzzyDateInt'] | null), 
     /** Filter by the end date of the media */
     endDate_like?: (Scalars['String'] | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_in?: ((MediaFormat | null)[] | null), 
     /** Filter by the media's format */
     format_not?: (MediaFormat | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_not_in?: ((MediaFormat | null)[] | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_in?: ((MediaStatus | null)[] | null), 
     /** Filter by the media's current release status */
     status_not?: (MediaStatus | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_not_in?: ((MediaStatus | null)[] | null), 
     /** Filter by amount of episodes the media has */
     episodes_greater?: (Scalars['Int'] | null), 
@@ -3253,21 +3255,21 @@ export interface PageGenqlSelection{
     volumes_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's volume count */
     volumes_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites name with a online streaming or reading license */
+    /** Filter media by sites name with a online streaming or reading license (max 10,000 items) */
     licensedBy_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites id with a online streaming or reading license */
+    /** Filter media by sites id with a online streaming or reading license (max 10,000 items) */
     licensedById_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's average score */
     averageScore_not?: (Scalars['Int'] | null), 
@@ -3281,7 +3283,7 @@ export interface PageGenqlSelection{
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the source type of the media */
+    /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
@@ -3294,9 +3296,9 @@ export interface PageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by character id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((CharacterSort | null)[] | null)} })
@@ -3309,9 +3311,9 @@ export interface PageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the staff id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StaffSort | null)[] | null)} })
@@ -3322,9 +3324,9 @@ export interface PageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the studio id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StudioSort | null)[] | null)} })
@@ -3351,17 +3353,17 @@ export interface PageGenqlSelection{
     completedAt?: (Scalars['FuzzyDateInt'] | null), 
     /** Limit to only entries also on the auth user's list. Requires user id or name arguments. */
     compareWithAuthList?: (Scalars['Boolean'] | null), 
-    /** Filter by a user's id */
+    /** Filter by a user's id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_in?: ((MediaListStatus | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_not_in?: ((MediaListStatus | null)[] | null), 
     /** Filter by the watching/reading status */
     status_not?: (MediaListStatus | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by note words and #tags */
     notes_like?: (Scalars['String'] | null), 
@@ -3392,21 +3394,21 @@ export interface PageGenqlSelection{
     notYetAired?: (Scalars['Boolean'] | null), 
     /** Filter by the id of the airing schedule item */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of associated media */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_not?: (Scalars['Int'] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_greater?: (Scalars['Int'] | null), 
@@ -3435,9 +3437,9 @@ export interface PageGenqlSelection{
     releasing?: (Scalars['Boolean'] | null), 
     /** Filter by the media id */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by date */
     date_greater?: (Scalars['Int'] | null), 
@@ -3474,7 +3476,7 @@ export interface PageGenqlSelection{
     type?: (NotificationType | null), 
     /** Reset the unread notification count to 0 on load */
     resetNotificationCount?: (Scalars['Boolean'] | null), 
-    /** Filter by the type of notifications */
+    /** Filter by the type of notifications (max 10,000 items) */
     type_in?: ((NotificationType | null)[] | null)} })
     followers?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
@@ -3507,33 +3509,33 @@ export interface PageGenqlSelection{
     createdAt?: (Scalars['Int'] | null), 
     /** Filter by the activity id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the owner user id */
     userId_not?: (Scalars['Int'] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of the user who sent a message */
     messengerId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the associated media id of the activity */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the type of activity */
     type_not?: (ActivityType | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_in?: ((ActivityType | null)[] | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_not_in?: ((ActivityType | null)[] | null), 
     /** Filter by the time the activity was created */
     createdAt_greater?: (Scalars['Int'] | null), 
@@ -3561,7 +3563,7 @@ export interface PageGenqlSelection{
     mediaCategoryId?: (Scalars['Int'] | null), 
     /** Filter by search query */
     search?: (Scalars['String'] | null), 
-    /** Filter by the thread id */
+    /** Filter by the thread id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((ThreadSort | null)[] | null)} })
@@ -5139,6 +5141,8 @@ export interface MessageActivityGenqlSelection{
     likeCount?: boolean | number
     /** If the currently authenticated user liked the activity */
     isLiked?: boolean | number
+    /** If the activity is pinned to the top of the users activity feed */
+    isPinned?: boolean | number
     /** If the message is private and only viewable to the sender and recipients */
     isPrivate?: boolean | number
     /** The url for the activity page on the AniList website */
@@ -6240,7 +6244,7 @@ export interface LikeableUnionGenqlSelection{
 export interface AniChartHighlightInput {mediaId?: (Scalars['Int'] | null),highlight?: (Scalars['String'] | null)}
 
 
-/** Page of data (Used for internal use only) */
+/** Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter. */
 export interface InternalPageGenqlSelection{
     mediaSubmissions?: (MediaSubmissionGenqlSelection & { __args?: {mediaId?: (Scalars['Int'] | null), submissionId?: (Scalars['Int'] | null), userId?: (Scalars['Int'] | null), assigneeId?: (Scalars['Int'] | null), status?: (SubmissionStatus | null), 
     /** Filter by the media's type */
@@ -6273,7 +6277,11 @@ export interface InternalPageGenqlSelection{
     /** Filter by the studio id */
     studioId?: (Scalars['Int'] | null)} })
     reports?: (ReportGenqlSelection & { __args?: {reporterId?: (Scalars['Int'] | null), reportedId?: (Scalars['Int'] | null)} })
-    modActions?: (ModActionGenqlSelection & { __args?: {userId?: (Scalars['Int'] | null), modId?: (Scalars['Int'] | null)} })
+    modActions?: (ModActionGenqlSelection & { __args?: {userId?: (Scalars['Int'] | null), modId?: (Scalars['Int'] | null), modId_not?: (Scalars['Int'] | null), 
+    /** (max 10,000 items) */
+    modId_in?: ((Scalars['Int'] | null)[] | null), 
+    /** (max 10,000 items) */
+    modId_not_in?: ((Scalars['Int'] | null)[] | null)} })
     userBlockSearch?: (UserGenqlSelection & { __args?: {
     /** Filter by search query */
     search?: (Scalars['String'] | null)} })
@@ -6347,15 +6355,15 @@ export interface InternalPageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the media id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's MyAnimeList id */
     idMal_not?: (Scalars['Int'] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media's MyAnimeList id */
+    /** Filter by the media's MyAnimeList id (max 10,000 items) */
     idMal_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the start date of the media */
     startDate_greater?: (Scalars['FuzzyDateInt'] | null), 
@@ -6369,17 +6377,17 @@ export interface InternalPageGenqlSelection{
     endDate_lesser?: (Scalars['FuzzyDateInt'] | null), 
     /** Filter by the end date of the media */
     endDate_like?: (Scalars['String'] | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_in?: ((MediaFormat | null)[] | null), 
     /** Filter by the media's format */
     format_not?: (MediaFormat | null), 
-    /** Filter by the media's format */
+    /** Filter by the media's format (max 10,000 items) */
     format_not_in?: ((MediaFormat | null)[] | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_in?: ((MediaStatus | null)[] | null), 
     /** Filter by the media's current release status */
     status_not?: (MediaStatus | null), 
-    /** Filter by the media's current release status */
+    /** Filter by the media's current release status (max 10,000 items) */
     status_not_in?: ((MediaStatus | null)[] | null), 
     /** Filter by amount of episodes the media has */
     episodes_greater?: (Scalars['Int'] | null), 
@@ -6397,21 +6405,21 @@ export interface InternalPageGenqlSelection{
     volumes_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's volume count */
     volumes_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's genres */
+    /** Filter by the media's genres (max 10,000 items) */
     genre_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags */
+    /** Filter by the media's tags (max 10,000 items) */
     tag_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter by the media's tags with in a tag category */
+    /** Filter by the media's tags with in a tag category (max 10,000 items) */
     tagCategory_not_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites name with a online streaming or reading license */
+    /** Filter media by sites name with a online streaming or reading license (max 10,000 items) */
     licensedBy_in?: ((Scalars['String'] | null)[] | null), 
-    /** Filter media by sites id with a online streaming or reading license */
+    /** Filter media by sites id with a online streaming or reading license (max 10,000 items) */
     licensedById_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the media's average score */
     averageScore_not?: (Scalars['Int'] | null), 
@@ -6425,7 +6433,7 @@ export interface InternalPageGenqlSelection{
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_lesser?: (Scalars['Int'] | null), 
-    /** Filter by the source type of the media */
+    /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
@@ -6438,9 +6446,9 @@ export interface InternalPageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by character id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by character id */
+    /** Filter by character id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((CharacterSort | null)[] | null)} })
@@ -6453,9 +6461,9 @@ export interface InternalPageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the staff id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the staff id */
+    /** Filter by the staff id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StaffSort | null)[] | null)} })
@@ -6466,9 +6474,9 @@ export interface InternalPageGenqlSelection{
     search?: (Scalars['String'] | null), 
     /** Filter by the studio id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the studio id */
+    /** Filter by the studio id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((StudioSort | null)[] | null)} })
@@ -6495,17 +6503,17 @@ export interface InternalPageGenqlSelection{
     completedAt?: (Scalars['FuzzyDateInt'] | null), 
     /** Limit to only entries also on the auth user's list. Requires user id or name arguments. */
     compareWithAuthList?: (Scalars['Boolean'] | null), 
-    /** Filter by a user's id */
+    /** Filter by a user's id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_in?: ((MediaListStatus | null)[] | null), 
-    /** Filter by the watching/reading status */
+    /** Filter by the watching/reading status (max 10,000 items) */
     status_not_in?: ((MediaListStatus | null)[] | null), 
     /** Filter by the watching/reading status */
     status_not?: (MediaListStatus | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id of the list entry */
+    /** Filter by the media id of the list entry (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by note words and #tags */
     notes_like?: (Scalars['String'] | null), 
@@ -6536,21 +6544,21 @@ export interface InternalPageGenqlSelection{
     notYetAired?: (Scalars['Boolean'] | null), 
     /** Filter by the id of the airing schedule item */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the airing schedule item */
+    /** Filter by the id of the airing schedule item (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of associated media */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of associated media */
+    /** Filter by the id of associated media (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_not?: (Scalars['Int'] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the airing episode number */
+    /** Filter by the airing episode number (max 10,000 items) */
     episode_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the airing episode number */
     episode_greater?: (Scalars['Int'] | null), 
@@ -6579,9 +6587,9 @@ export interface InternalPageGenqlSelection{
     releasing?: (Scalars['Boolean'] | null), 
     /** Filter by the media id */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the media id */
+    /** Filter by the media id (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by date */
     date_greater?: (Scalars['Int'] | null), 
@@ -6618,7 +6626,7 @@ export interface InternalPageGenqlSelection{
     type?: (NotificationType | null), 
     /** Reset the unread notification count to 0 on load */
     resetNotificationCount?: (Scalars['Boolean'] | null), 
-    /** Filter by the type of notifications */
+    /** Filter by the type of notifications (max 10,000 items) */
     type_in?: ((NotificationType | null)[] | null)} })
     followers?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
@@ -6651,33 +6659,33 @@ export interface InternalPageGenqlSelection{
     createdAt?: (Scalars['Int'] | null), 
     /** Filter by the activity id */
     id_not?: (Scalars['Int'] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the activity id */
+    /** Filter by the activity id (max 10,000 items) */
     id_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the owner user id */
     userId_not?: (Scalars['Int'] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the owner user id */
+    /** Filter by the owner user id (max 10,000 items) */
     userId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the id of the user who sent a message */
     messengerId_not?: (Scalars['Int'] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the id of the user who sent a message */
+    /** Filter by the id of the user who sent a message (max 10,000 items) */
     messengerId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the associated media id of the activity */
     mediaId_not?: (Scalars['Int'] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_in?: ((Scalars['Int'] | null)[] | null), 
-    /** Filter by the associated media id of the activity */
+    /** Filter by the associated media id of the activity (max 10,000 items) */
     mediaId_not_in?: ((Scalars['Int'] | null)[] | null), 
     /** Filter by the type of activity */
     type_not?: (ActivityType | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_in?: ((ActivityType | null)[] | null), 
-    /** Filter by the type of activity */
+    /** Filter by the type of activity (max 10,000 items) */
     type_not_in?: ((ActivityType | null)[] | null), 
     /** Filter by the time the activity was created */
     createdAt_greater?: (Scalars['Int'] | null), 
@@ -6705,7 +6713,7 @@ export interface InternalPageGenqlSelection{
     mediaCategoryId?: (Scalars['Int'] | null), 
     /** Filter by search query */
     search?: (Scalars['String'] | null), 
-    /** Filter by the thread id */
+    /** Filter by the thread id (max 10,000 items) */
     id_in?: ((Scalars['Int'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((ThreadSort | null)[] | null)} })

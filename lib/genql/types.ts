@@ -4374,6 +4374,9 @@ export default {
             "isLiked": [
                 4
             ],
+            "isPinned": [
+                4
+            ],
             "isPrivate": [
                 4
             ],
@@ -6160,6 +6163,17 @@ export default {
                     ],
                     "modId": [
                         1
+                    ],
+                    "modId_not": [
+                        1
+                    ],
+                    "modId_in": [
+                        1,
+                        "[Int]"
+                    ],
+                    "modId_not_in": [
+                        1,
+                        "[Int]"
                     ]
                 }
             ],

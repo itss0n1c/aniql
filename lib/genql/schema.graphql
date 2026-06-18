@@ -97,19 +97,19 @@ type Query {
     """Filter by the media id"""
     id_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the media's MyAnimeList id"""
     idMal_not: Int
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_in: [Int]
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_not_in: [Int]
 
     """Filter by the start date of the media"""
@@ -130,22 +130,22 @@ type Query {
     """Filter by the end date of the media"""
     endDate_like: String
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_in: [MediaFormat]
 
     """Filter by the media's format"""
     format_not: MediaFormat
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_not_in: [MediaFormat]
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_in: [MediaStatus]
 
     """Filter by the media's current release status"""
     status_not: MediaStatus
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_not_in: [MediaStatus]
 
     """Filter by amount of episodes the media has"""
@@ -172,28 +172,32 @@ type Query {
     """Filter by the media's volume count"""
     volumes_lesser: Int
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_in: [String]
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_not_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_not_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_not_in: [String]
 
-    """Filter media by sites name with a online streaming or reading license"""
+    """
+    Filter media by sites name with a online streaming or reading license (max 10,000 items)
+    """
     licensedBy_in: [String]
 
-    """Filter media by sites id with a online streaming or reading license"""
+    """
+    Filter media by sites id with a online streaming or reading license (max 10,000 items)
+    """
     licensedById_in: [Int]
 
     """Filter by the media's average score"""
@@ -214,7 +218,7 @@ type Query {
     """Filter by the number of users with this media on their list"""
     popularity_lesser: Int
 
-    """Filter by the source type of the media"""
+    """Filter by the source type of the media (max 10,000 items)"""
     source_in: [MediaSource]
 
     """The order the results will be returned in"""
@@ -247,10 +251,10 @@ type Query {
     """Filter by the media id"""
     mediaId_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by date"""
@@ -319,28 +323,28 @@ type Query {
     """Filter by the id of the airing schedule item"""
     id_not: Int
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the id of associated media"""
     mediaId_not: Int
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the airing episode number"""
     episode_not: Int
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_in: [Int]
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_not_in: [Int]
 
     """Filter by the airing episode number"""
@@ -373,10 +377,10 @@ type Query {
     """Filter by character id"""
     id_not: Int
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -397,10 +401,10 @@ type Query {
     """Filter by the staff id"""
     id_not: Int
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -446,22 +450,22 @@ type Query {
     """
     compareWithAuthList: Boolean
 
-    """Filter by a user's id"""
+    """Filter by a user's id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_in: [MediaListStatus]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_not_in: [MediaListStatus]
 
     """Filter by the watching/reading status"""
     status_not: MediaListStatus
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by note words and #tags"""
@@ -525,10 +529,10 @@ type Query {
     """The amount of entries per chunk, max 500"""
     perChunk: Int
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_in: [MediaListStatus]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_not_in: [MediaListStatus]
 
     """Filter by the watching/reading status"""
@@ -597,7 +601,7 @@ type Query {
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
 
-    """Filter by the type of notifications"""
+    """Filter by the type of notifications (max 10,000 items)"""
     type_in: [NotificationType]
   ): NotificationUnion
 
@@ -612,10 +616,10 @@ type Query {
     """Filter by the studio id"""
     id_not: Int
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -674,46 +678,46 @@ type Query {
     """Filter by the activity id"""
     id_not: Int
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the owner user id"""
     userId_not: Int
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_not_in: [Int]
 
     """Filter by the id of the user who sent a message"""
     messengerId_not: Int
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_in: [Int]
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_not_in: [Int]
 
     """Filter by the associated media id of the activity"""
     mediaId_not: Int
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the type of activity"""
     type_not: ActivityType
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_in: [ActivityType]
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_not_in: [ActivityType]
 
     """Filter by the time the activity was created"""
@@ -776,7 +780,7 @@ type Query {
     """Filter by search query"""
     search: String
 
-    """Filter by the thread id"""
+    """Filter by the thread id (max 10,000 items)"""
     id_in: [Int]
 
     """The order the results will be returned in"""
@@ -856,7 +860,9 @@ type Query {
   ): [MediaExternalLink]
 }
 
-"""Page of data"""
+"""
+Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter.
+"""
 type Page {
   """The pagination information"""
   pageInfo: PageInfo
@@ -965,19 +971,19 @@ type Page {
     """Filter by the media id"""
     id_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the media's MyAnimeList id"""
     idMal_not: Int
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_in: [Int]
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_not_in: [Int]
 
     """Filter by the start date of the media"""
@@ -998,22 +1004,22 @@ type Page {
     """Filter by the end date of the media"""
     endDate_like: String
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_in: [MediaFormat]
 
     """Filter by the media's format"""
     format_not: MediaFormat
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_not_in: [MediaFormat]
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_in: [MediaStatus]
 
     """Filter by the media's current release status"""
     status_not: MediaStatus
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_not_in: [MediaStatus]
 
     """Filter by amount of episodes the media has"""
@@ -1040,28 +1046,32 @@ type Page {
     """Filter by the media's volume count"""
     volumes_lesser: Int
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_in: [String]
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_not_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_not_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_not_in: [String]
 
-    """Filter media by sites name with a online streaming or reading license"""
+    """
+    Filter media by sites name with a online streaming or reading license (max 10,000 items)
+    """
     licensedBy_in: [String]
 
-    """Filter media by sites id with a online streaming or reading license"""
+    """
+    Filter media by sites id with a online streaming or reading license (max 10,000 items)
+    """
     licensedById_in: [Int]
 
     """Filter by the media's average score"""
@@ -1082,7 +1092,7 @@ type Page {
     """Filter by the number of users with this media on their list"""
     popularity_lesser: Int
 
-    """Filter by the source type of the media"""
+    """Filter by the source type of the media (max 10,000 items)"""
     source_in: [MediaSource]
 
     """The order the results will be returned in"""
@@ -1101,10 +1111,10 @@ type Page {
     """Filter by character id"""
     id_not: Int
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -1123,10 +1133,10 @@ type Page {
     """Filter by the staff id"""
     id_not: Int
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -1142,10 +1152,10 @@ type Page {
     """Filter by the studio id"""
     id_not: Int
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -1189,22 +1199,22 @@ type Page {
     """
     compareWithAuthList: Boolean
 
-    """Filter by a user's id"""
+    """Filter by a user's id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_in: [MediaListStatus]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_not_in: [MediaListStatus]
 
     """Filter by the watching/reading status"""
     status_not: MediaListStatus
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by note words and #tags"""
@@ -1250,28 +1260,28 @@ type Page {
     """Filter by the id of the airing schedule item"""
     id_not: Int
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the id of associated media"""
     mediaId_not: Int
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the airing episode number"""
     episode_not: Int
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_in: [Int]
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_not_in: [Int]
 
     """Filter by the airing episode number"""
@@ -1314,10 +1324,10 @@ type Page {
     """Filter by the media id"""
     mediaId_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by date"""
@@ -1372,7 +1382,7 @@ type Page {
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
 
-    """Filter by the type of notifications"""
+    """Filter by the type of notifications (max 10,000 items)"""
     type_in: [NotificationType]
   ): [NotificationUnion]
   followers(
@@ -1422,46 +1432,46 @@ type Page {
     """Filter by the activity id"""
     id_not: Int
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the owner user id"""
     userId_not: Int
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_not_in: [Int]
 
     """Filter by the id of the user who sent a message"""
     messengerId_not: Int
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_in: [Int]
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_not_in: [Int]
 
     """Filter by the associated media id of the activity"""
     mediaId_not: Int
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the type of activity"""
     type_not: ActivityType
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_in: [ActivityType]
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_not_in: [ActivityType]
 
     """Filter by the time the activity was created"""
@@ -1502,7 +1512,7 @@ type Page {
     """Filter by search query"""
     search: String
 
-    """Filter by the thread id"""
+    """Filter by the thread id (max 10,000 items)"""
     id_in: [Int]
 
     """The order the results will be returned in"""
@@ -2382,16 +2392,16 @@ type FuzzyDate {
 }
 
 enum MediaSeason {
-  """Months December to February"""
+  """Predominantly started airing between January and March"""
   WINTER
 
-  """Months March to May"""
+  """Predominantly started airing between April and June"""
   SPRING
 
-  """Months June to August"""
+  """Predominantly started airing between July and September"""
   SUMMER
 
-  """Months September to November"""
+  """Predominantly started airing between October and November"""
   FALL
 }
 
@@ -3277,8 +3287,8 @@ enum ReviewSort {
   SCORE_DESC
   RATING
   RATING_DESC
-  CREATED_AT
-  CREATED_AT_DESC
+  CREATED_AT @deprecated(reason: "Use ID instead")
+  CREATED_AT_DESC @deprecated(reason: "Use ID_DESC instead")
   UPDATED_AT
   UPDATED_AT_DESC
 }
@@ -3959,6 +3969,9 @@ type MessageActivity {
 
   """If the currently authenticated user liked the activity"""
   isLiked: Boolean
+
+  """If the activity is pinned to the top of the users activity feed"""
+  isPinned: Boolean
 
   """
   If the message is private and only viewable to the sender and recipients
@@ -4764,8 +4777,8 @@ enum ThreadSort {
   ID_DESC
   TITLE
   TITLE_DESC
-  CREATED_AT
-  CREATED_AT_DESC
+  CREATED_AT @deprecated(reason: "Use ID instead")
+  CREATED_AT_DESC @deprecated(reason: "Use ID_DESC instead")
   UPDATED_AT
   UPDATED_AT_DESC
   REPLIED_AT
@@ -5443,7 +5456,9 @@ input AniChartHighlightInput {
   highlight: String
 }
 
-"""Page of data (Used for internal use only)"""
+"""
+Page of data. Limited to a max depth of 5000 entries. This is calculated as the page parameter multiplied by the perPage parameter.
+"""
 type InternalPage {
   mediaSubmissions(
     mediaId: Int
@@ -5501,7 +5516,17 @@ type InternalPage {
     studioId: Int
   ): [RevisionHistory]
   reports(reporterId: Int, reportedId: Int): [Report]
-  modActions(userId: Int, modId: Int): [ModAction]
+  modActions(
+    userId: Int
+    modId: Int
+    modId_not: Int
+
+    """(max 10,000 items)"""
+    modId_in: [Int]
+
+    """(max 10,000 items)"""
+    modId_not_in: [Int]
+  ): [ModAction]
   userBlockSearch(
     """Filter by search query"""
     search: String
@@ -5614,19 +5639,19 @@ type InternalPage {
     """Filter by the media id"""
     id_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the media's MyAnimeList id"""
     idMal_not: Int
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_in: [Int]
 
-    """Filter by the media's MyAnimeList id"""
+    """Filter by the media's MyAnimeList id (max 10,000 items)"""
     idMal_not_in: [Int]
 
     """Filter by the start date of the media"""
@@ -5647,22 +5672,22 @@ type InternalPage {
     """Filter by the end date of the media"""
     endDate_like: String
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_in: [MediaFormat]
 
     """Filter by the media's format"""
     format_not: MediaFormat
 
-    """Filter by the media's format"""
+    """Filter by the media's format (max 10,000 items)"""
     format_not_in: [MediaFormat]
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_in: [MediaStatus]
 
     """Filter by the media's current release status"""
     status_not: MediaStatus
 
-    """Filter by the media's current release status"""
+    """Filter by the media's current release status (max 10,000 items)"""
     status_not_in: [MediaStatus]
 
     """Filter by amount of episodes the media has"""
@@ -5689,28 +5714,32 @@ type InternalPage {
     """Filter by the media's volume count"""
     volumes_lesser: Int
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_in: [String]
 
-    """Filter by the media's genres"""
+    """Filter by the media's genres (max 10,000 items)"""
     genre_not_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_in: [String]
 
-    """Filter by the media's tags"""
+    """Filter by the media's tags (max 10,000 items)"""
     tag_not_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_in: [String]
 
-    """Filter by the media's tags with in a tag category"""
+    """Filter by the media's tags with in a tag category (max 10,000 items)"""
     tagCategory_not_in: [String]
 
-    """Filter media by sites name with a online streaming or reading license"""
+    """
+    Filter media by sites name with a online streaming or reading license (max 10,000 items)
+    """
     licensedBy_in: [String]
 
-    """Filter media by sites id with a online streaming or reading license"""
+    """
+    Filter media by sites id with a online streaming or reading license (max 10,000 items)
+    """
     licensedById_in: [Int]
 
     """Filter by the media's average score"""
@@ -5731,7 +5760,7 @@ type InternalPage {
     """Filter by the number of users with this media on their list"""
     popularity_lesser: Int
 
-    """Filter by the source type of the media"""
+    """Filter by the source type of the media (max 10,000 items)"""
     source_in: [MediaSource]
 
     """The order the results will be returned in"""
@@ -5750,10 +5779,10 @@ type InternalPage {
     """Filter by character id"""
     id_not: Int
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by character id"""
+    """Filter by character id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -5772,10 +5801,10 @@ type InternalPage {
     """Filter by the staff id"""
     id_not: Int
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the staff id"""
+    """Filter by the staff id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -5791,10 +5820,10 @@ type InternalPage {
     """Filter by the studio id"""
     id_not: Int
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the studio id"""
+    """Filter by the studio id (max 10,000 items)"""
     id_not_in: [Int]
 
     """The order the results will be returned in"""
@@ -5838,22 +5867,22 @@ type InternalPage {
     """
     compareWithAuthList: Boolean
 
-    """Filter by a user's id"""
+    """Filter by a user's id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_in: [MediaListStatus]
 
-    """Filter by the watching/reading status"""
+    """Filter by the watching/reading status (max 10,000 items)"""
     status_not_in: [MediaListStatus]
 
     """Filter by the watching/reading status"""
     status_not: MediaListStatus
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id of the list entry"""
+    """Filter by the media id of the list entry (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by note words and #tags"""
@@ -5899,28 +5928,28 @@ type InternalPage {
     """Filter by the id of the airing schedule item"""
     id_not: Int
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the id of the airing schedule item"""
+    """Filter by the id of the airing schedule item (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the id of associated media"""
     mediaId_not: Int
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the id of associated media"""
+    """Filter by the id of associated media (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the airing episode number"""
     episode_not: Int
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_in: [Int]
 
-    """Filter by the airing episode number"""
+    """Filter by the airing episode number (max 10,000 items)"""
     episode_not_in: [Int]
 
     """Filter by the airing episode number"""
@@ -5963,10 +5992,10 @@ type InternalPage {
     """Filter by the media id"""
     mediaId_not: Int
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the media id"""
+    """Filter by the media id (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by date"""
@@ -6021,7 +6050,7 @@ type InternalPage {
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
 
-    """Filter by the type of notifications"""
+    """Filter by the type of notifications (max 10,000 items)"""
     type_in: [NotificationType]
   ): [NotificationUnion]
   followers(
@@ -6071,46 +6100,46 @@ type InternalPage {
     """Filter by the activity id"""
     id_not: Int
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_in: [Int]
 
-    """Filter by the activity id"""
+    """Filter by the activity id (max 10,000 items)"""
     id_not_in: [Int]
 
     """Filter by the owner user id"""
     userId_not: Int
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_in: [Int]
 
-    """Filter by the owner user id"""
+    """Filter by the owner user id (max 10,000 items)"""
     userId_not_in: [Int]
 
     """Filter by the id of the user who sent a message"""
     messengerId_not: Int
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_in: [Int]
 
-    """Filter by the id of the user who sent a message"""
+    """Filter by the id of the user who sent a message (max 10,000 items)"""
     messengerId_not_in: [Int]
 
     """Filter by the associated media id of the activity"""
     mediaId_not: Int
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_in: [Int]
 
-    """Filter by the associated media id of the activity"""
+    """Filter by the associated media id of the activity (max 10,000 items)"""
     mediaId_not_in: [Int]
 
     """Filter by the type of activity"""
     type_not: ActivityType
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_in: [ActivityType]
 
-    """Filter by the type of activity"""
+    """Filter by the type of activity (max 10,000 items)"""
     type_not_in: [ActivityType]
 
     """Filter by the time the activity was created"""
@@ -6151,7 +6180,7 @@ type InternalPage {
     """Filter by search query"""
     search: String
 
-    """Filter by the thread id"""
+    """Filter by the thread id (max 10,000 items)"""
     id_in: [Int]
 
     """The order the results will be returned in"""

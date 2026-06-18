@@ -1,34 +1,36 @@
-import type { FieldsSelection, Mutation, MutationGenqlSelection, Query, QueryGenqlSelection } from './genql';
-import { type ClientOptions, createFetcher, generateGraphqlOperation, linkTypeMap } from './genql/runtime';
-import types from './genql/types';
+/** biome-ignore-all lint/suspicious/noExplicitAny: necessary for genql */
+import type { FieldsSelection, Mutation, MutationGenqlSelection, Query, QueryGenqlSelection } from './genql/index.ts';
+import { type ClientOptions, createFetcher, generateGraphqlOperation, linkTypeMap } from './genql/runtime/index.ts';
+import types from './genql/types.ts';
 
-/** Represents a value that can be awaited. */
 export type Awaitable<T> = Promise<T> | T;
 
 interface AniQLAuthBase {
 	client_id: number;
 }
 
-interface AniQLAuthResCode extends AniQLAuthBase {
+export interface AniQLAuthResCode extends AniQLAuthBase {
 	response_type: 'code';
 	client_secret: string;
 	redirect_uri: string;
 }
 
-interface AniQLAuthResToken extends AniQLAuthBase {
+export interface AniQLAuthResToken extends AniQLAuthBase {
 	response_type: 'token';
 }
 
 export type AniQLAuth = AniQLAuthResCode | AniQLAuthResToken;
 
 /** Options for the AniQL client. */
-export type AniQLOptions = ClientOptions & {
+export interface AniQLOptions extends ClientOptions {
 	auth: AniQLAuth;
 	get_token?: () => Awaitable<string | undefined>;
-};
+}
 
 /** Options for the request made by the AniQL client. */
-export type AniQLRequestOptions = { token?: string };
+export interface AniQLRequestOptions {
+	token?: string;
+}
 
 const typeMap = linkTypeMap(types as any);
 const typeMapQuery = typeMap.Query;
@@ -54,7 +56,12 @@ export class AniQLClientError extends Error {
 	}
 }
 
-export type RateLimitData = { limit: number; remaining: number; reset: number };
+export interface RateLimitData {
+	limit: number;
+	remaining: number;
+	reset: number;
+}
+
 export interface AniQLClientEvents {
 	rate_limit: Array<(data: RateLimitData) => Awaitable<any>>;
 }
@@ -229,9 +236,9 @@ export class AniQLClient {
 
 export {
 	everything,
-	generateGraphqlOperation,
-	GenqlError,
 	type FieldsSelection,
+	GenqlError,
 	type GraphqlOperation,
-} from './genql/runtime';
-export * from './genql/schema';
+	generateGraphqlOperation,
+} from './genql/runtime/index.ts';
+export * from './genql/schema.ts';

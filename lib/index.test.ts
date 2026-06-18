@@ -1,6 +1,6 @@
-import arkenv from 'arkenv';
 import { test } from 'bun:test';
-import { AniQLClient, type UserGenqlSelection } from '.';
+import arkenv from 'arkenv';
+import { AniQLClient, type UserGenqlSelection } from './index.ts';
 
 const env = arkenv({
 	CLIENT_ID: 'string',
