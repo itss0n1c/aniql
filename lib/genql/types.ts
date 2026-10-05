@@ -286,6 +286,14 @@ export default {
                         31,
                         "[MediaSource]"
                     ],
+                    "countryOfOrigin_in": [
+                        30,
+                        "[CountryCode]"
+                    ],
+                    "countryOfOrigin_not_in": [
+                        30,
+                        "[CountryCode]"
+                    ],
                     "sort": [
                         42,
                         "[MediaSort]"
@@ -1268,6 +1276,14 @@ export default {
                     "source_in": [
                         31,
                         "[MediaSource]"
+                    ],
+                    "countryOfOrigin_in": [
+                        30,
+                        "[CountryCode]"
+                    ],
+                    "countryOfOrigin_not_in": [
+                        30,
+                        "[CountryCode]"
                     ],
                     "sort": [
                         42,
@@ -6432,6 +6448,14 @@ export default {
                     "source_in": [
                         31,
                         "[MediaSource]"
+                    ],
+                    "countryOfOrigin_in": [
+                        30,
+                        "[CountryCode]"
+                    ],
+                    "countryOfOrigin_not_in": [
+                        30,
+                        "[CountryCode]"
                     ],
                     "sort": [
                         42,

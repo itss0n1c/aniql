@@ -133,6 +133,7 @@ export interface User {
     isFollower: (Scalars['Boolean'] | null)
     /** If the user is blocked by the authenticated user */
     isBlocked: (Scalars['Boolean'] | null)
+    /** List of active bans. Mod-only */
     bans: (Scalars['Json'] | null)
     /** The user's general options */
     options: (UserOptions | null)
@@ -1165,7 +1166,7 @@ export interface AiringProgression {
 
 
 /** Type of relation media has to its parent. */
-export type MediaRelation = 'ADAPTATION' | 'PREQUEL' | 'SEQUEL' | 'PARENT' | 'SIDE_STORY' | 'CHARACTER' | 'SUMMARY' | 'ALTERNATIVE' | 'SPIN_OFF' | 'OTHER' | 'SOURCE' | 'COMPILATION' | 'CONTAINS'
+export type MediaRelation = 'ADAPTATION' | 'PREQUEL' | 'SEQUEL' | 'PARENT' | 'SIDE_STORY' | 'CHARACTER' | 'SUMMARY' | 'ALTERNATIVE' | 'SPIN_OFF' | 'OTHER' | 'SOURCE' | 'COMPILATION' | 'CONTAINS' | 'SAME_UNIVERSE'
 
 export interface UserStatisticTypes {
     anime: (UserStatistics | null)
@@ -1351,7 +1352,7 @@ export interface UserStats {
 }
 
 
-/** A user's activity history stats. */
+/** A user's activity history stats for the previous 6 months. Refreshes only periodically */
 export interface UserActivityHistory {
     /** The day the activity took place (Unix timestamp) */
     date: (Scalars['Int'] | null)
@@ -2711,6 +2712,10 @@ export interface QueryGenqlSelection{
     popularity_lesser?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_in?: ((Scalars['CountryCode'] | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_not_in?: ((Scalars['CountryCode'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
     /** Media Trend query */
@@ -3285,6 +3290,10 @@ export interface PageGenqlSelection{
     popularity_lesser?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_in?: ((Scalars['CountryCode'] | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_not_in?: ((Scalars['CountryCode'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
     characters?: (CharacterGenqlSelection & { __args?: {
@@ -3651,6 +3660,7 @@ export interface UserGenqlSelection{
     isFollower?: boolean | number
     /** If the user is blocked by the authenticated user */
     isBlocked?: boolean | number
+    /** List of active bans. Mod-only */
     bans?: boolean | number
     /** The user's general options */
     options?: UserOptionsGenqlSelection
@@ -3851,7 +3861,7 @@ export interface MediaEdgeGenqlSelection{
     id?: boolean | number
     /** The type of relation to the parent model */
     relationType?: { __args: {
-    /** Provide 2 to use new version 2 of relation enum */
+    /** Provide 3 to use new version 3 of relation enum */
     version?: (Scalars['Int'] | null)} } | boolean | number
     /** If the studio is the main animation studio of the media (For Studio->MediaConnection field only) */
     isMainStudio?: boolean | number
@@ -4926,7 +4936,7 @@ export interface UserStatsGenqlSelection{
 }
 
 
-/** A user's activity history stats. */
+/** A user's activity history stats for the previous 6 months. Refreshes only periodically */
 export interface UserActivityHistoryGenqlSelection{
     /** The day the activity took place (Unix timestamp) */
     date?: boolean | number
@@ -5903,13 +5913,13 @@ export interface MutationGenqlSelection{
     rowOrder?: (Scalars['String'] | null), 
     /** Profile highlight color */
     profileColor?: (Scalars['String'] | null), 
-    /** Profile highlight color */
+    /** Profile highlight color (Max: 24) */
     donatorBadge?: (Scalars['String'] | null), 
     /** Notification options */
     notificationOptions?: ((NotificationOptionInput | null)[] | null), 
     /** Timezone offset format: -?HH:MM */
     timezone?: (Scalars['String'] | null), 
-    /** Minutes between activity for them to be merged together. 0 is Never, Above 2 weeks (20160 mins) is Always. */
+    /** Minutes between activity for them to be merged together. 0 is Never, Above 2 weeks (20160 mins) is Always. (Min: 0) */
     activityMergeTime?: (Scalars['Int'] | null), 
     /** The user's anime list options */
     animeListOptions?: (MediaListOptionsInput | null), 
@@ -5920,62 +5930,62 @@ export interface MutationGenqlSelection{
     /** Only allow messages from other users the user follows */
     restrictMessagesToFollowing?: (Scalars['Boolean'] | null), disabledListActivity?: ((ListActivityOptionInput | null)[] | null)} })
     /** Create or update a media list entry */
-    SaveMediaListEntry?: (MediaListGenqlSelection & { __args?: {
+    SaveMediaListEntry?: (MediaListGenqlSelection & { __args: {
     /** The list entry id, required for updating */
     id?: (Scalars['Int'] | null), 
     /** The id of the media the entry is of */
     mediaId?: (Scalars['Int'] | null), 
     /** The watching/reading status */
     status?: (MediaListStatus | null), 
-    /** The score of the media in the user's chosen scoring method */
+    /** The score of the media in the user's chosen scoring method (Min: 0, Max: 100) */
     score?: (Scalars['Float'] | null), 
-    /** The score of the media in 100 point */
+    /** The score of the media in 100 point (Min: 0, Max: 100) */
     scoreRaw?: (Scalars['Int'] | null), 
-    /** The amount of episodes/chapters consumed by the user */
+    /** The amount of episodes/chapters consumed by the user (Min: 0) */
     progress?: (Scalars['Int'] | null), 
-    /** The amount of volumes read by the user */
+    /** The amount of volumes read by the user (Min: 0) */
     progressVolumes?: (Scalars['Int'] | null), 
-    /** The amount of times the user has rewatched/read the media */
+    /** The amount of times the user has rewatched/read the media (Min: 0, Max: 1000) */
     repeat?: (Scalars['Int'] | null), 
-    /** Priority of planning */
+    /** Priority of planning (Min: 0, Max: 255) */
     priority?: (Scalars['Int'] | null), 
     /** If the entry should only be visible to authenticated user */
     private?: (Scalars['Boolean'] | null), 
-    /** Text notes */
+    /** Text notes (Min: 0, Max: 6000) */
     notes?: (Scalars['String'] | null), 
     /** If the entry shown be hidden from non-custom lists */
     hiddenFromStatusLists?: (Scalars['Boolean'] | null), 
     /** Array of custom list names which should be enabled for this entry */
     customLists?: ((Scalars['String'] | null)[] | null), 
-    /** Array of advanced scores */
+    /** Array of advanced scores (Min: 0, Max: 100) */
     advancedScores?: ((Scalars['Float'] | null)[] | null), 
     /** When the entry was started by the user */
     startedAt?: (FuzzyDateInput | null), 
     /** When the entry was completed by the user */
     completedAt?: (FuzzyDateInput | null)} })
     /** Update multiple media list entries to the same values */
-    UpdateMediaListEntries?: (MediaListGenqlSelection & { __args?: {
+    UpdateMediaListEntries?: (MediaListGenqlSelection & { __args: {
     /** The watching/reading status */
     status?: (MediaListStatus | null), 
-    /** The score of the media in the user's chosen scoring method */
+    /** The score of the media in the user's chosen scoring method (Min: 0, Max: 100) */
     score?: (Scalars['Float'] | null), 
-    /** The score of the media in 100 point */
+    /** The score of the media in 100 point (Min: 0, Max: 100) */
     scoreRaw?: (Scalars['Int'] | null), 
-    /** The amount of episodes/chapters consumed by the user */
+    /** The amount of episodes/chapters consumed by the user (Min: 0) */
     progress?: (Scalars['Int'] | null), 
-    /** The amount of volumes read by the user */
+    /** The amount of volumes read by the user (Min: 0) */
     progressVolumes?: (Scalars['Int'] | null), 
-    /** The amount of times the user has rewatched/read the media */
+    /** The amount of times the user has rewatched/read the media (Min: 0, Max: 1000) */
     repeat?: (Scalars['Int'] | null), 
-    /** Priority of planning */
+    /** Priority of planning (Min: 0, Max: 255) */
     priority?: (Scalars['Int'] | null), 
     /** If the entry should only be visible to authenticated user */
     private?: (Scalars['Boolean'] | null), 
-    /** Text notes */
+    /** Text notes (Min: 0, Max: 6000) */
     notes?: (Scalars['String'] | null), 
     /** If the entry shown be hidden from non-custom lists */
     hiddenFromStatusLists?: (Scalars['Boolean'] | null), 
-    /** Array of advanced scores */
+    /** Array of advanced scores (Min: 0, Max: 100) */
     advancedScores?: ((Scalars['Float'] | null)[] | null), 
     /** When the entry was started by the user */
     startedAt?: (FuzzyDateInput | null), 
@@ -5994,18 +6004,18 @@ export interface MutationGenqlSelection{
     /** The media list type of the custom list */
     type?: (MediaType | null)} })
     /** Create or update text activity for the currently authenticated user */
-    SaveTextActivity?: (TextActivityGenqlSelection & { __args?: {
+    SaveTextActivity?: (TextActivityGenqlSelection & { __args: {
     /** The activity's id, required for updating */
     id?: (Scalars['Int'] | null), 
-    /** The activity text */
+    /** The activity text (Min: 5, Max: 10000) */
     text?: (Scalars['String'] | null), 
     /** If the activity should be locked. (Mod Only) */
     locked?: (Scalars['Boolean'] | null)} })
     /** Create or update message activity for the currently authenticated user */
-    SaveMessageActivity?: (MessageActivityGenqlSelection & { __args?: {
+    SaveMessageActivity?: (MessageActivityGenqlSelection & { __args: {
     /** The activity id, required for updating */
     id?: (Scalars['Int'] | null), 
-    /** The activity message text */
+    /** The activity message text (Min: 2, Max: 10000) */
     message?: (Scalars['String'] | null), 
     /** The id of the user the message is being sent to */
     recipientId?: (Scalars['Int'] | null), 
@@ -6038,12 +6048,12 @@ export interface MutationGenqlSelection{
     /** Whether to subscribe or unsubscribe from the activity */
     subscribe?: (Scalars['Boolean'] | null)} })
     /** Create or update an activity reply */
-    SaveActivityReply?: (ActivityReplyGenqlSelection & { __args?: {
+    SaveActivityReply?: (ActivityReplyGenqlSelection & { __args: {
     /** The activity reply id, required for updating */
     id?: (Scalars['Int'] | null), 
     /** The id of the parent activity being replied to */
     activityId?: (Scalars['Int'] | null), 
-    /** The reply text */
+    /** The reply text (Min: 2, Max: 8000) */
     text?: (Scalars['String'] | null), 
     /** If the reply should be sent from the Moderator account (Mod Only) */
     asMod?: (Scalars['Boolean'] | null)} })
@@ -6110,11 +6120,11 @@ export interface MutationGenqlSelection{
     id?: (Scalars['Int'] | null), 
     /** The id of the media the review is of */
     mediaId?: (Scalars['Int'] | null), 
-    /** The main review text. Min:2200 characters */
+    /** The main review text (Min: 2600) */
     body?: (Scalars['String'] | null), 
-    /** A short summary/preview of the review. Min:20, Max:120 characters */
+    /** A short summary/preview of the review (Min: 20, Max: 120) */
     summary?: (Scalars['String'] | null), 
-    /** A short summary/preview of the review. Min:20, Max:120 characters */
+    /** The score of the review (Min: 0, Max: 100) */
     score?: (Scalars['Int'] | null), 
     /** If the review should only be visible to its creator */
     private?: (Scalars['Boolean'] | null)} })
@@ -6137,12 +6147,12 @@ export interface MutationGenqlSelection{
     /** The rating to give the recommendation */
     rating?: (RecommendationRating | null)} })
     /** Create or update a forum thread */
-    SaveThread?: (ThreadGenqlSelection & { __args?: {
+    SaveThread?: (ThreadGenqlSelection & { __args: {
     /** The thread id, required for updating */
     id?: (Scalars['Int'] | null), 
-    /** The title of the thread */
+    /** The title of the thread (Min: 6, Max: 120) */
     title?: (Scalars['String'] | null), 
-    /** The main text body of the thread */
+    /** The main text body of the thread (Max: 30000) */
     body?: (Scalars['String'] | null), 
     /** Forum categories the thread should be within */
     categories?: ((Scalars['Int'] | null)[] | null), 
@@ -6163,14 +6173,14 @@ export interface MutationGenqlSelection{
     /** Whether to subscribe or unsubscribe from the forum thread */
     subscribe?: (Scalars['Boolean'] | null)} })
     /** Create or update a thread comment */
-    SaveThreadComment?: (ThreadCommentGenqlSelection & { __args?: {
+    SaveThreadComment?: (ThreadCommentGenqlSelection & { __args: {
     /** The comment id, required for updating */
     id?: (Scalars['Int'] | null), 
     /** The id of thread the comment belongs to */
     threadId?: (Scalars['Int'] | null), 
     /** The id of thread comment to reply to */
     parentCommentId?: (Scalars['Int'] | null), 
-    /** The comment markdown text */
+    /** The comment markdown text (Min: 1, Max: 12000) */
     comment?: (Scalars['String'] | null), 
     /** If the comment tree should be locked. (Mod Only) */
     locked?: (Scalars['Boolean'] | null)} })
@@ -6435,6 +6445,10 @@ export interface InternalPageGenqlSelection{
     popularity_lesser?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media (max 10,000 items) */
     source_in?: ((MediaSource | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_in?: ((Scalars['CountryCode'] | null)[] | null), 
+    /** Filter by the media's country of origin (max 10,000 items) */
+    countryOfOrigin_not_in?: ((Scalars['CountryCode'] | null)[] | null), 
     /** The order the results will be returned in */
     sort?: ((MediaSort | null)[] | null)} })
     characters?: (CharacterGenqlSelection & { __args?: {
@@ -8362,7 +8376,8 @@ export const enumMediaRelation = {
    OTHER: 'OTHER' as const,
    SOURCE: 'SOURCE' as const,
    COMPILATION: 'COMPILATION' as const,
-   CONTAINS: 'CONTAINS' as const
+   CONTAINS: 'CONTAINS' as const,
+   SAME_UNIVERSE: 'SAME_UNIVERSE' as const
 }
 
 export const enumUserStatisticsSort = {
