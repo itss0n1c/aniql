@@ -4,10 +4,17 @@ import { AniQLClient, AniQLClientError, type RateLimitData } from './index.ts';
 const query = { User: { __args: { name: 'itss0n1c' }, id: true } } as const;
 const response = () => Response.json({ data: { User: { id: 123 } } });
 
+function mockFetch(createResponse: () => Response = response) {
+	const implementation: typeof fetch = Object.assign(async () => createResponse(), {
+		preconnect: mock<typeof fetch.preconnect>(),
+	});
+	return spyOn(globalThis, 'fetch').mockImplementation(implementation);
+}
+
 afterEach(() => mock.restore());
 
 test('public queries work without OAuth or an Authorization header', async () => {
-	const fetch = spyOn(globalThis, 'fetch').mockImplementation(async () => response());
+	const fetch = mockFetch();
 	for (const client of [new AniQLClient(), new AniQLClient({ client_id: 123 })]) {
 		expect(await client.query(query)).toEqual({ User: { id: 123 } });
 	}
@@ -17,7 +24,7 @@ test('public queries work without OAuth or an Authorization header', async () =>
 });
 
 test('request token overrides get_token, which takes precedence over the static token', async () => {
-	const fetch = spyOn(globalThis, 'fetch').mockImplementation(async () => response());
+	const fetch = mockFetch();
 	let current: string | undefined = 'dynamic';
 	const get_token = mock(async () => current);
 	const client = new AniQLClient({ token: 'static', get_token });
@@ -35,7 +42,7 @@ test('request token overrides get_token, which takes precedence over the static 
 });
 
 test('client and request abort signals reach fetch', async () => {
-	const fetch = spyOn(globalThis, 'fetch').mockImplementation(async () => response());
+	const fetch = mockFetch();
 	const defaults = new AbortController();
 	const request = new AbortController();
 	const client = new AniQLClient({ signal: defaults.signal });
@@ -57,9 +64,7 @@ test('OAuth helpers require OAuth configuration', async () => {
 test('rate limit state uses a deadline without scheduling a timer for unsubscribed clients', async () => {
 	const now = spyOn(Date, 'now').mockReturnValue(0);
 	const interval = spyOn(globalThis, 'setInterval');
-	spyOn(globalThis, 'fetch').mockImplementation(async () =>
-		Response.json({}, { status: 429, headers: { 'retry-after': '2' } }),
-	);
+	mockFetch(() => Response.json({}, { status: 429, headers: { 'retry-after': '2' } }));
 	const client = new AniQLClient();
 	await expect(client.query(query)).rejects.toHaveProperty('status', 429);
 	expect(interval).not.toHaveBeenCalled();
@@ -71,7 +76,7 @@ test('rate limit state uses a deadline without scheduling a timer for unsubscrib
 test('rate limit listeners receive one initial event and a final zero without mutating snapshots', async () => {
 	const now = spyOn(Date, 'now').mockReturnValue(0);
 	const interval = spyOn(globalThis, 'setInterval');
-	spyOn(globalThis, 'fetch').mockImplementation(async () =>
+	mockFetch(() =>
 		Response.json({ data: {} }, { headers: { 'x-ratelimit-reset': '1', 'x-ratelimit-remaining': '89' } }),
 	);
 	const events: RateLimitData[] = [];
