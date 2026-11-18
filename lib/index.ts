@@ -71,7 +71,17 @@ export interface AniQLClientEvents {
 	rate_limit: Array<(data: RateLimitData) => Awaitable<any>>;
 }
 
-const _parse_num = (str: string) => Number.parseInt(str, 10);
+function reset_deadline(headers: Headers, now: number, limited: boolean): number {
+	const reset = headers.get('x-ratelimit-reset');
+	if (reset && /^\d+$/.test(reset) && Number.isFinite(Number(reset) * 1000)) return Number(reset) * 1000;
+
+	const retry = headers.get('retry-after');
+	if (retry) {
+		const deadline = /^\d+$/.test(retry) ? now + Number(retry) * 1000 : Date.parse(retry);
+		if (Number.isFinite(deadline)) return deadline;
+	}
+	return limited ? now + 60_000 : now;
+}
 
 /**
  * AniQLClient is a client for interacting with the AniList GraphQL API.
@@ -85,38 +95,43 @@ const _parse_num = (str: string) => Number.parseInt(str, 10);
 export class AniQLClient {
 	#_opts: AniQLOptions;
 	static base_url = 'https://graphql.anilist.co';
-	rate_limit: RateLimitData = { limit: 90, remaining: 90, reset: 0 };
+	#_rate_limit = { limit: 90, remaining: 90, deadline: 0 };
 
-	#_events: AniQLClientEvents = {
-		rate_limit: [],
-	};
+	get rate_limit(): RateLimitData {
+		const { limit, remaining, deadline } = this.#_rate_limit;
+		return { limit, remaining, reset: Math.max(0, Math.ceil((deadline - Date.now()) / 1000)) };
+	}
+
+	#_events: AniQLClientEvents = { rate_limit: [] };
 
 	on<K extends keyof AniQLClientEvents>(event: K, listener: AniQLClientEvents[K][number]): this {
-		if (!this.#_events[event]) this.#_events[event] = [];
 		this.#_events[event].push(listener);
+		this.#_start_countdown();
 		return this;
 	}
 
-	#_rate_limit_send = (data: RateLimitData) =>
-		this.#_events.rate_limit.forEach((cb) => {
-			cb(data);
-		});
-
-	#_rate_limit_handle = () => {
-		if (this.rate_limit.reset <= 0) clearInterval(this.#_emit_listener);
-		this.#_rate_limit_send(this.rate_limit);
-		this.rate_limit.reset--;
-	};
-
 	#_emit_listener?: ReturnType<(typeof globalThis)['setInterval']>;
-	#_emit_rate_limit(data: RateLimitData) {
-		if (this.#_emit_listener) clearInterval(this.#_emit_listener);
-		this.rate_limit = data;
-		if (this.rate_limit.reset >= 1) {
-			this.#_rate_limit_handle();
-			this.#_emit_listener = setInterval(() => this.#_rate_limit_handle(), 1000);
-		}
-		this.#_rate_limit_send(data);
+
+	#_stop_countdown() {
+		clearInterval(this.#_emit_listener);
+		this.#_emit_listener = undefined;
+	}
+
+	#_start_countdown() {
+		if (this.#_emit_listener !== undefined || !this.#_events.rate_limit.length || !this.rate_limit.reset) return;
+		const timer = setInterval(() => {
+			const data = this.rate_limit;
+			if (data.reset === 0) this.#_stop_countdown();
+			this.#_rate_limit_send(data);
+		}, 1000);
+		this.#_emit_listener = timer;
+		if (typeof timer === 'object' && 'unref' in timer && typeof timer.unref === 'function') timer.unref();
+	}
+
+	#_rate_limit_send(data: RateLimitData) {
+		this.#_events.rate_limit.forEach((cb) => {
+			cb({ ...data });
+		});
 	}
 
 	constructor(opts: AniQLOptions = {}) {
@@ -148,57 +163,37 @@ export class AniQLClient {
 				const signal = opts?.signal ?? this.#_opts.signal;
 				signal?.throwIfAborted();
 				const token = opts?.token ?? (await this.#_opts.get_token?.()) ?? this.#_opts.token;
-				let res: Response;
-				try {
-					res = await fetch(AniQLClient.base_url, {
-						method: 'POST',
-						headers: {
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-							...(token ? { Authorization: `Bearer ${token}` } : {}),
-						},
-						body: JSON.stringify(operation),
-						signal,
-					});
-				} catch (e) {
-					if (e instanceof TypeError) {
-						if (e.message.includes('NetworkError'))
-							this.#_emit_rate_limit({ limit: 0, remaining: 0, reset: 60 });
-					}
-					throw e;
-				}
-
-				const _limit = _parse_num(res.headers.get('x-ratelimit-limit') ?? '0');
-				const _remaining = _parse_num(res.headers.get('x-ratelimit-remaining') ?? '0');
-				const __reset = res.headers.get('x-ratelimit-reset');
-				let reset_count: number | undefined;
-				if (__reset) {
-					const _reset = _parse_num(__reset ?? '');
-					if (!Number.isNaN(_reset))
-						reset_count = Math.floor((new Date(_reset * 1000).getTime() - Date.now()) / 1000);
-				} else {
-					const retry_after = res.headers.get('retry-after');
-					if (retry_after) {
-						const _reset = _parse_num(retry_after ?? '');
-						if (!Number.isNaN(_reset))
-							reset_count = Math.floor(
-								(new Date(Date.now() + _reset * 1000).getTime() - Date.now()) / 1000,
-							);
-					}
-				}
-				const limit = Number.isNaN(_limit) ? 0 : _limit;
-				const remaining = Number.isNaN(_remaining) ? 0 : _remaining;
-
-				const reset = reset_count ?? 60;
-				console.log(res.status, reset);
-
-				this.#_emit_rate_limit({
-					limit,
-					remaining,
-					reset,
+				const res = await fetch(AniQLClient.base_url, {
+					method: 'POST',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+						...(token ? { Authorization: `Bearer ${token}` } : {}),
+					},
+					body: JSON.stringify(operation),
+					signal,
 				});
 
-				if (res.status === 429) throw new AniQLClientError(429, 'Rate limit exceeded');
+				const limit = res.headers.get('x-ratelimit-limit');
+				const remaining = res.headers.get('x-ratelimit-remaining');
+				const limited = res.status === 429;
+				if (
+					limited ||
+					limit !== null ||
+					remaining !== null ||
+					res.headers.has('x-ratelimit-reset') ||
+					res.headers.has('retry-after')
+				) {
+					this.#_stop_countdown();
+					this.#_rate_limit = {
+						limit: Number.parseInt(limit ?? '', 10) || 0,
+						remaining: Number.parseInt(remaining ?? '', 10) || 0,
+						deadline: reset_deadline(res.headers, Date.now(), limited || remaining === '0'),
+					};
+					this.#_start_countdown();
+					this.#_rate_limit_send(this.rate_limit);
+				}
+				if (limited) throw new AniQLClientError(429, 'Rate limit exceeded');
 
 				return await res.json();
 			},
