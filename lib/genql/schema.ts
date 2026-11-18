@@ -52,6 +52,8 @@ export interface Query {
     Following: (User | null)
     /** Follower query */
     Follower: (User | null)
+    /** Mutual follower query */
+    MutualFollower: (User | null)
     /** Thread query */
     Thread: (Thread | null)
     /** Comment query */
@@ -86,6 +88,7 @@ export interface Page {
     notifications: ((NotificationUnion | null)[] | null)
     followers: ((User | null)[] | null)
     following: ((User | null)[] | null)
+    mutualFollowers: ((User | null)[] | null)
     activities: ((ActivityUnion | null)[] | null)
     activityReplies: ((ActivityReply | null)[] | null)
     threads: ((Thread | null)[] | null)
@@ -149,6 +152,8 @@ export interface User {
     siteUrl: (Scalars['String'] | null)
     /** The donation tier of the user */
     donatorTier: (Scalars['Int'] | null)
+    /** The user's account privacy setting */
+    privacy: (UserPrivacy | null)
     /** Custom donation badge text */
     donatorBadge: (Scalars['String'] | null)
     /** The user's moderator roles if they are a site moderator */
@@ -189,6 +194,12 @@ export interface UserOptions {
     titleLanguage: (UserTitleLanguage | null)
     /** Whether the user has enabled viewing of 18+ content */
     displayAdultContent: (Scalars['Boolean'] | null)
+    /** Whether the user wants to see adult media in search results by default. Sub-option of displayAdultContent */
+    includeAdultContentInSearch: (Scalars['Boolean'] | null)
+    /** Whether the user wants to see adult media in quick search results by default. Sub-option of displayAdultContent */
+    includeAdultContentInQuickSearch: (Scalars['Boolean'] | null)
+    /** Whether the user wants to see others' activities for adult media. Sub-option of displayAdultContent */
+    displayAdultActivities: (Scalars['Boolean'] | null)
     /** Whether the user receives notifications when a show they are watching aires */
     airingNotifications: (Scalars['Boolean'] | null)
     /** Profile highlight color (blue, purple, pink, orange, red, green, gray) */
@@ -278,7 +289,7 @@ export interface MediaListTypeOptions {
     /** If the completed sections of the list should be separated by format */
     splitCompletedSectionByFormat: (Scalars['Boolean'] | null)
     /**
-     * @deprecated This field has not yet been fully implemented and may change without warning
+     * @deprecated No longer used
      * The list theme options
      */
     theme: (Scalars['Json'] | null)
@@ -401,8 +412,13 @@ export interface Media {
     genres: ((Scalars['String'] | null)[] | null)
     /** Alternative titles of the media */
     synonyms: ((Scalars['String'] | null)[] | null)
-    /** A weighted average score of all the user's scores of the media */
+    /**
+     * @deprecated Use weightedScore
+     * A weighted average score of all the users' scores of the media
+     */
     averageScore: (Scalars['Int'] | null)
+    /** A weighted average score of all the users' scores of the media */
+    weightedScore: (Scalars['Int'] | null)
     /** Mean score of all the user's scores of the media */
     meanScore: (Scalars['Int'] | null)
     /** The number of users with the media on their list */
@@ -898,8 +914,13 @@ export interface MediaTrend {
     date: Scalars['Int']
     /** The amount of media activity on the day */
     trending: Scalars['Int']
-    /** A weighted average score of all the user's scores of the media */
+    /**
+     * @deprecated Use weightedScore
+     * A weighted average score of all the user's scores of the media
+     */
     averageScore: (Scalars['Int'] | null)
+    /** A weighted average score of all the user's scores of the media */
+    weightedScore: (Scalars['Int'] | null)
     /** The number of users with the media on their list */
     popularity: (Scalars['Int'] | null)
     /** The number of users with watching/reading the media */
@@ -1157,7 +1178,7 @@ export interface StatusDistribution {
 export interface AiringProgression {
     /** The episode the stats were recorded at. .5 is the mid point between 2 episodes airing dates. */
     episode: (Scalars['Float'] | null)
-    /** The average score for the media */
+    /** The weighted average score for the media */
     score: (Scalars['Float'] | null)
     /** The amount of users watching the anime */
     watching: (Scalars['Int'] | null)
@@ -1321,6 +1342,10 @@ export interface UserStudioStatistic {
     studio: (Studio | null)
     __typename: 'UserStudioStatistic'
 }
+
+
+/** User's account privacy setting */
+export type UserPrivacy = 'PUBLIC' | 'SEMI_PUBLIC' | 'PRIVATE'
 
 
 /** Mod role enums */
@@ -2273,6 +2298,8 @@ export interface Mutation {
     ToggleLikeV2: (LikeableUnion | null)
     /** Toggle the un/following of a user */
     ToggleFollow: (User | null)
+    /** Removes a follower */
+    DeleteFollower: (User | null)
     /** Favourite or unfavourite an anime, manga, character, staff member, or studio */
     ToggleFavourite: (Favourites | null)
     /** Update the order favourites are displayed in */
@@ -2322,6 +2349,7 @@ export interface InternalPage {
     reports: ((Report | null)[] | null)
     modActions: ((ModAction | null)[] | null)
     userBlockSearch: ((User | null)[] | null)
+    recentlyRepliedActivities: ((ActivityUnion | null)[] | null)
     /** The pagination information */
     pageInfo: (PageInfo | null)
     users: ((User | null)[] | null)
@@ -2335,6 +2363,7 @@ export interface InternalPage {
     notifications: ((NotificationUnion | null)[] | null)
     followers: ((User | null)[] | null)
     following: ((User | null)[] | null)
+    mutualFollowers: ((User | null)[] | null)
     activities: ((ActivityUnion | null)[] | null)
     activityReplies: ((ActivityReply | null)[] | null)
     threads: ((Thread | null)[] | null)
@@ -2517,6 +2546,7 @@ export interface Report {
     /** When the entry data was created */
     createdAt: (Scalars['Int'] | null)
     cleared: (Scalars['Boolean'] | null)
+    assignee: (User | null)
     __typename: 'Report'
 }
 
@@ -2559,11 +2589,11 @@ export interface CharacterSubmissionEdge {
 
 /** User data for moderators */
 export interface UserModData {
-    alts: ((User | null)[] | null)
     bans: (Scalars['Json'] | null)
+    browserAlts: ((User | null)[] | null)
     ip: (Scalars['Json'] | null)
+    ipAlts: ((User | null)[] | null)
     counts: (Scalars['Json'] | null)
-    privacy: (Scalars['Int'] | null)
     email: (Scalars['String'] | null)
     __typename: 'UserModData'
 }
@@ -2620,6 +2650,8 @@ export interface QueryGenqlSelection{
     licensedById?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media */
@@ -2704,6 +2736,12 @@ export interface QueryGenqlSelection{
     averageScore_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_not?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_not?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
@@ -2728,6 +2766,8 @@ export interface QueryGenqlSelection{
     trending?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by episode number */
@@ -2756,6 +2796,12 @@ export interface QueryGenqlSelection{
     averageScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore_not?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_not?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by popularity */
@@ -3066,6 +3112,12 @@ export interface QueryGenqlSelection{
     userId: Scalars['Int'], 
     /** The order the results will be returned in */
     sort?: ((UserSort | null)[] | null)} })
+    /** Mutual follower query */
+    MutualFollower?: (UserGenqlSelection & { __args: {
+    /** User id to fetch mutual followers for */
+    userId: Scalars['Int'], 
+    /** The order the results will be returned in */
+    sort?: ((UserSort | null)[] | null)} })
     /** Thread query */
     Thread?: (ThreadGenqlSelection & { __args?: {
     /** Filter by the thread id */
@@ -3198,6 +3250,8 @@ export interface PageGenqlSelection{
     licensedById?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media */
@@ -3282,6 +3336,12 @@ export interface PageGenqlSelection{
     averageScore_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_not?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_not?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
@@ -3438,6 +3498,8 @@ export interface PageGenqlSelection{
     trending?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by episode number */
@@ -3466,6 +3528,12 @@ export interface PageGenqlSelection{
     averageScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore_not?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_not?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by popularity */
@@ -3494,6 +3562,11 @@ export interface PageGenqlSelection{
     sort?: ((UserSort | null)[] | null)} })
     following?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
+    userId: Scalars['Int'], 
+    /** The order the results will be returned in */
+    sort?: ((UserSort | null)[] | null)} })
+    mutualFollowers?: (UserGenqlSelection & { __args: {
+    /** User id to fetch mutual followers for */
     userId: Scalars['Int'], 
     /** The order the results will be returned in */
     sort?: ((UserSort | null)[] | null)} })
@@ -3678,6 +3751,8 @@ export interface UserGenqlSelection{
     siteUrl?: boolean | number
     /** The donation tier of the user */
     donatorTier?: boolean | number
+    /** The user's account privacy setting */
+    privacy?: boolean | number
     /** Custom donation badge text */
     donatorBadge?: boolean | number
     /** The user's moderator roles if they are a site moderator */
@@ -3720,6 +3795,12 @@ export interface UserOptionsGenqlSelection{
     titleLanguage?: boolean | number
     /** Whether the user has enabled viewing of 18+ content */
     displayAdultContent?: boolean | number
+    /** Whether the user wants to see adult media in search results by default. Sub-option of displayAdultContent */
+    includeAdultContentInSearch?: boolean | number
+    /** Whether the user wants to see adult media in quick search results by default. Sub-option of displayAdultContent */
+    includeAdultContentInQuickSearch?: boolean | number
+    /** Whether the user wants to see others' activities for adult media. Sub-option of displayAdultContent */
+    displayAdultActivities?: boolean | number
     /** Whether the user receives notifications when a show they are watching aires */
     airingNotifications?: boolean | number
     /** Profile highlight color (blue, purple, pink, orange, red, green, gray) */
@@ -3793,7 +3874,7 @@ export interface MediaListTypeOptionsGenqlSelection{
     /** If the completed sections of the list should be separated by format */
     splitCompletedSectionByFormat?: boolean | number
     /**
-     * @deprecated This field has not yet been fully implemented and may change without warning
+     * @deprecated No longer used
      * The list theme options
      */
     theme?: boolean | number
@@ -3948,8 +4029,13 @@ export interface MediaGenqlSelection{
     genres?: boolean | number
     /** Alternative titles of the media */
     synonyms?: boolean | number
-    /** A weighted average score of all the user's scores of the media */
+    /**
+     * @deprecated Use weightedScore
+     * A weighted average score of all the users' scores of the media
+     */
     averageScore?: boolean | number
+    /** A weighted average score of all the users' scores of the media */
+    weightedScore?: boolean | number
     /** Mean score of all the user's scores of the media */
     meanScore?: boolean | number
     /** The number of users with the media on their list */
@@ -4480,8 +4566,13 @@ export interface MediaTrendGenqlSelection{
     date?: boolean | number
     /** The amount of media activity on the day */
     trending?: boolean | number
-    /** A weighted average score of all the user's scores of the media */
+    /**
+     * @deprecated Use weightedScore
+     * A weighted average score of all the user's scores of the media
+     */
     averageScore?: boolean | number
+    /** A weighted average score of all the user's scores of the media */
+    weightedScore?: boolean | number
     /** The number of users with the media on their list */
     popularity?: boolean | number
     /** The number of users with watching/reading the media */
@@ -4737,7 +4828,7 @@ export interface StatusDistributionGenqlSelection{
 export interface AiringProgressionGenqlSelection{
     /** The episode the stats were recorded at. .5 is the mid point between 2 episodes airing dates. */
     episode?: boolean | number
-    /** The average score for the media */
+    /** The weighted average score for the media */
     score?: boolean | number
     /** The amount of users watching the anime */
     watching?: boolean | number
@@ -5905,6 +5996,12 @@ export interface MutationGenqlSelection{
     titleLanguage?: (UserTitleLanguage | null), 
     /** If the user should see media marked as adult-only */
     displayAdultContent?: (Scalars['Boolean'] | null), 
+    /** If the user should see media marked as adult-only in search results */
+    includeAdultContentInSearch?: (Scalars['Boolean'] | null), 
+    /** If the user should see media marked as adult-only in quick search results */
+    includeAdultContentInQuickSearch?: (Scalars['Boolean'] | null), 
+    /** If the user should see others' activities for media marked as adult */
+    displayAdultActivities?: (Scalars['Boolean'] | null), 
     /** If the user should get notifications when a show they are watching aires */
     airingNotifications?: (Scalars['Boolean'] | null), 
     /** The user's list scoring system */
@@ -5913,7 +6010,7 @@ export interface MutationGenqlSelection{
     rowOrder?: (Scalars['String'] | null), 
     /** Profile highlight color */
     profileColor?: (Scalars['String'] | null), 
-    /** Profile highlight color (Max: 24) */
+    /** User's donator badge, only displayed for donators (Max: 24) */
     donatorBadge?: (Scalars['String'] | null), 
     /** Notification options */
     notificationOptions?: ((NotificationOptionInput | null)[] | null), 
@@ -6080,6 +6177,10 @@ export interface MutationGenqlSelection{
     ToggleFollow?: (UserGenqlSelection & { __args?: {
     /** The id of the user to un/follow */
     userId?: (Scalars['Int'] | null)} })
+    /** Removes a follower */
+    DeleteFollower?: (UserGenqlSelection & { __args?: {
+    /** The id of the user to remove the follower status of */
+    userId?: (Scalars['Int'] | null)} })
     /** Favourite or unfavourite an anime, manga, character, staff member, or studio */
     ToggleFavourite?: (FavouritesGenqlSelection & { __args?: {
     /** The id of the anime to un/favourite */
@@ -6152,7 +6253,7 @@ export interface MutationGenqlSelection{
     id?: (Scalars['Int'] | null), 
     /** The title of the thread (Min: 6, Max: 120) */
     title?: (Scalars['String'] | null), 
-    /** The main text body of the thread (Max: 30000) */
+    /** The main text body of the thread (Min: 10, Max: 30000) */
     body?: (Scalars['String'] | null), 
     /** Forum categories the thread should be within */
     categories?: ((Scalars['Int'] | null)[] | null), 
@@ -6295,6 +6396,9 @@ export interface InternalPageGenqlSelection{
     userBlockSearch?: (UserGenqlSelection & { __args?: {
     /** Filter by search query */
     search?: (Scalars['String'] | null)} })
+    recentlyRepliedActivities?: (ActivityUnionGenqlSelection & { __args?: {
+    /** Filter by the owner user id */
+    userId?: (Scalars['Int'] | null)} })
     /** The pagination information */
     pageInfo?: PageInfoGenqlSelection
     users?: (UserGenqlSelection & { __args?: {
@@ -6353,6 +6457,8 @@ export interface InternalPageGenqlSelection{
     licensedById?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by the source type of the media */
@@ -6437,6 +6543,12 @@ export interface InternalPageGenqlSelection{
     averageScore_greater?: (Scalars['Int'] | null), 
     /** Filter by the media's average score */
     averageScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_not?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by the media's average score */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
     popularity_not?: (Scalars['Int'] | null), 
     /** Filter by the number of users with this media on their list */
@@ -6593,6 +6705,8 @@ export interface InternalPageGenqlSelection{
     trending?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity?: (Scalars['Int'] | null), 
     /** Filter by episode number */
@@ -6621,6 +6735,12 @@ export interface InternalPageGenqlSelection{
     averageScore_lesser?: (Scalars['Int'] | null), 
     /** Filter by score */
     averageScore_not?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_greater?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_lesser?: (Scalars['Int'] | null), 
+    /** Filter by weighted scores */
+    weightedScore_not?: (Scalars['Int'] | null), 
     /** Filter by popularity */
     popularity_greater?: (Scalars['Int'] | null), 
     /** Filter by popularity */
@@ -6649,6 +6769,11 @@ export interface InternalPageGenqlSelection{
     sort?: ((UserSort | null)[] | null)} })
     following?: (UserGenqlSelection & { __args: {
     /** User id of the follower/followed */
+    userId: Scalars['Int'], 
+    /** The order the results will be returned in */
+    sort?: ((UserSort | null)[] | null)} })
+    mutualFollowers?: (UserGenqlSelection & { __args: {
+    /** User id to fetch mutual followers for */
     userId: Scalars['Int'], 
     /** The order the results will be returned in */
     sort?: ((UserSort | null)[] | null)} })
@@ -6946,6 +7071,7 @@ export interface ReportGenqlSelection{
     /** When the entry data was created */
     createdAt?: boolean | number
     cleared?: boolean | number
+    assignee?: UserGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -7042,11 +7168,11 @@ alternative?: ((Scalars['String'] | null)[] | null)}
 
 /** User data for moderators */
 export interface UserModDataGenqlSelection{
-    alts?: UserGenqlSelection
     bans?: boolean | number
+    browserAlts?: UserGenqlSelection
     ip?: boolean | number
+    ipAlts?: UserGenqlSelection
     counts?: boolean | number
-    privacy?: boolean | number
     email?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -8389,6 +8515,12 @@ export const enumUserStatisticsSort = {
    PROGRESS_DESC: 'PROGRESS_DESC' as const,
    MEAN_SCORE: 'MEAN_SCORE' as const,
    MEAN_SCORE_DESC: 'MEAN_SCORE_DESC' as const
+}
+
+export const enumUserPrivacy = {
+   PUBLIC: 'PUBLIC' as const,
+   SEMI_PUBLIC: 'SEMI_PUBLIC' as const,
+   PRIVATE: 'PRIVATE' as const
 }
 
 export const enumModRole = {

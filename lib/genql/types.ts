@@ -33,21 +33,22 @@ export default {
         83,
         86,
         99,
-        110,
+        100,
         111,
         112,
-        118,
-        143,
+        113,
+        119,
         144,
         145,
         146,
-        152,
-        156,
+        147,
+        153,
+        157,
         166,
-        167,
-        175,
-        178,
-        187
+        168,
+        169,
+        177,
+        180
     ],
     "types": {
         "Query": {
@@ -72,10 +73,10 @@ export default {
                         1
                     ],
                     "startDate": [
-                        110
+                        111
                     ],
                     "endDate": [
-                        110
+                        111
                     ],
                     "season": [
                         29
@@ -131,6 +132,9 @@ export default {
                     "averageScore": [
                         1
                     ],
+                    "weightedScore": [
+                        1
+                    ],
                     "popularity": [
                         1
                     ],
@@ -169,19 +173,19 @@ export default {
                         "[Int]"
                     ],
                     "startDate_greater": [
-                        110
+                        111
                     ],
                     "startDate_lesser": [
-                        110
+                        111
                     ],
                     "startDate_like": [
                         5
                     ],
                     "endDate_greater": [
-                        110
+                        111
                     ],
                     "endDate_lesser": [
-                        110
+                        111
                     ],
                     "endDate_like": [
                         5
@@ -273,6 +277,15 @@ export default {
                     "averageScore_lesser": [
                         1
                     ],
+                    "weightedScore_not": [
+                        1
+                    ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
+                        1
+                    ],
                     "popularity_not": [
                         1
                     ],
@@ -313,6 +326,9 @@ export default {
                         1
                     ],
                     "averageScore": [
+                        1
+                    ],
+                    "weightedScore": [
                         1
                     ],
                     "popularity": [
@@ -357,6 +373,15 @@ export default {
                         1
                     ],
                     "averageScore_not": [
+                        1
+                    ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
+                        1
+                    ],
+                    "weightedScore_not": [
                         1
                     ],
                     "popularity_greater": [
@@ -447,7 +472,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        112,
+                        113,
                         "[AiringSort]"
                     ]
                 }
@@ -538,10 +563,10 @@ export default {
                         5
                     ],
                     "startedAt": [
-                        110
+                        111
                     ],
                     "completedAt": [
-                        110
+                        111
                     ],
                     "compareWithAuthList": [
                         4
@@ -573,31 +598,31 @@ export default {
                         5
                     ],
                     "startedAt_greater": [
-                        110
+                        111
                     ],
                     "startedAt_lesser": [
-                        110
+                        111
                     ],
                     "startedAt_like": [
                         5
                     ],
                     "completedAt_greater": [
-                        110
+                        111
                     ],
                     "completedAt_lesser": [
-                        110
+                        111
                     ],
                     "completedAt_like": [
                         5
                     ],
                     "sort": [
-                        111,
+                        112,
                         "[MediaListSort]"
                     ]
                 }
             ],
             "MediaListCollection": [
-                147,
+                148,
                 {
                     "userId": [
                         1
@@ -615,10 +640,10 @@ export default {
                         5
                     ],
                     "startedAt": [
-                        110
+                        111
                     ],
                     "completedAt": [
-                        110
+                        111
                     ],
                     "forceSingleCompletedList": [
                         4
@@ -644,25 +669,25 @@ export default {
                         5
                     ],
                     "startedAt_greater": [
-                        110
+                        111
                     ],
                     "startedAt_lesser": [
-                        110
+                        111
                     ],
                     "startedAt_like": [
                         5
                     ],
                     "completedAt_greater": [
-                        110
+                        111
                     ],
                     "completedAt_lesser": [
-                        110
+                        111
                     ],
                     "completedAt_like": [
                         5
                     ],
                     "sort": [
-                        111,
+                        112,
                         "[MediaListSort]"
                     ]
                 }
@@ -703,7 +728,7 @@ export default {
                 7
             ],
             "Notification": [
-                113,
+                114,
                 {
                     "type": [
                         13
@@ -765,7 +790,7 @@ export default {
                 }
             ],
             "Activity": [
-                121,
+                122,
                 {
                     "id": [
                         1
@@ -780,7 +805,7 @@ export default {
                         1
                     ],
                     "type": [
-                        118
+                        119
                     ],
                     "isFollowing": [
                         4
@@ -839,14 +864,14 @@ export default {
                         "[Int]"
                     ],
                     "type_not": [
-                        118
+                        119
                     ],
                     "type_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "type_not_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "createdAt_greater": [
@@ -856,13 +881,13 @@ export default {
                         1
                     ],
                     "sort": [
-                        143,
+                        144,
                         "[ActivitySort]"
                     ]
                 }
             ],
             "ActivityReply": [
-                119,
+                120,
                 {
                     "id": [
                         1
@@ -898,8 +923,21 @@ export default {
                     ]
                 }
             ],
+            "MutualFollower": [
+                7,
+                {
+                    "userId": [
+                        1,
+                        "Int!"
+                    ],
+                    "sort": [
+                        6,
+                        "[UserSort]"
+                    ]
+                }
+            ],
             "Thread": [
-                129,
+                130,
                 {
                     "id": [
                         1
@@ -927,13 +965,13 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        144,
+                        145,
                         "[ThreadSort]"
                     ]
                 }
             ],
             "ThreadComment": [
-                131,
+                132,
                 {
                     "id": [
                         1
@@ -945,7 +983,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        145,
+                        146,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -990,12 +1028,12 @@ export default {
                         1
                     ],
                     "type": [
-                        146
+                        147
                     ]
                 }
             ],
             "Markdown": [
-                149,
+                150,
                 {
                     "markdown": [
                         5,
@@ -1004,10 +1042,10 @@ export default {
                 }
             ],
             "AniChartUser": [
-                150
+                151
             ],
             "SiteStatistics": [
-                151
+                152
             ],
             "ExternalLinkSourceCollection": [
                 62,
@@ -1019,7 +1057,7 @@ export default {
                         63
                     ],
                     "mediaType": [
-                        156
+                        157
                     ]
                 }
             ],
@@ -1063,10 +1101,10 @@ export default {
                         1
                     ],
                     "startDate": [
-                        110
+                        111
                     ],
                     "endDate": [
-                        110
+                        111
                     ],
                     "season": [
                         29
@@ -1122,6 +1160,9 @@ export default {
                     "averageScore": [
                         1
                     ],
+                    "weightedScore": [
+                        1
+                    ],
                     "popularity": [
                         1
                     ],
@@ -1160,19 +1201,19 @@ export default {
                         "[Int]"
                     ],
                     "startDate_greater": [
-                        110
+                        111
                     ],
                     "startDate_lesser": [
-                        110
+                        111
                     ],
                     "startDate_like": [
                         5
                     ],
                     "endDate_greater": [
-                        110
+                        111
                     ],
                     "endDate_lesser": [
-                        110
+                        111
                     ],
                     "endDate_like": [
                         5
@@ -1262,6 +1303,15 @@ export default {
                         1
                     ],
                     "averageScore_lesser": [
+                        1
+                    ],
+                    "weightedScore_not": [
+                        1
+                    ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
                         1
                     ],
                     "popularity_not": [
@@ -1403,10 +1453,10 @@ export default {
                         5
                     ],
                     "startedAt": [
-                        110
+                        111
                     ],
                     "completedAt": [
-                        110
+                        111
                     ],
                     "compareWithAuthList": [
                         4
@@ -1438,25 +1488,25 @@ export default {
                         5
                     ],
                     "startedAt_greater": [
-                        110
+                        111
                     ],
                     "startedAt_lesser": [
-                        110
+                        111
                     ],
                     "startedAt_like": [
                         5
                     ],
                     "completedAt_greater": [
-                        110
+                        111
                     ],
                     "completedAt_lesser": [
-                        110
+                        111
                     ],
                     "completedAt_like": [
                         5
                     ],
                     "sort": [
-                        111,
+                        112,
                         "[MediaListSort]"
                     ]
                 }
@@ -1525,7 +1575,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        112,
+                        113,
                         "[AiringSort]"
                     ]
                 }
@@ -1543,6 +1593,9 @@ export default {
                         1
                     ],
                     "averageScore": [
+                        1
+                    ],
+                    "weightedScore": [
                         1
                     ],
                     "popularity": [
@@ -1589,6 +1642,15 @@ export default {
                     "averageScore_not": [
                         1
                     ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
+                        1
+                    ],
+                    "weightedScore_not": [
+                        1
+                    ],
                     "popularity_greater": [
                         1
                     ],
@@ -1614,7 +1676,7 @@ export default {
                 }
             ],
             "notifications": [
-                113,
+                114,
                 {
                     "type": [
                         13
@@ -1654,8 +1716,21 @@ export default {
                     ]
                 }
             ],
+            "mutualFollowers": [
+                7,
+                {
+                    "userId": [
+                        1,
+                        "Int!"
+                    ],
+                    "sort": [
+                        6,
+                        "[UserSort]"
+                    ]
+                }
+            ],
             "activities": [
-                121,
+                122,
                 {
                     "id": [
                         1
@@ -1670,7 +1745,7 @@ export default {
                         1
                     ],
                     "type": [
-                        118
+                        119
                     ],
                     "isFollowing": [
                         4
@@ -1729,14 +1804,14 @@ export default {
                         "[Int]"
                     ],
                     "type_not": [
-                        118
+                        119
                     ],
                     "type_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "type_not_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "createdAt_greater": [
@@ -1746,13 +1821,13 @@ export default {
                         1
                     ],
                     "sort": [
-                        143,
+                        144,
                         "[ActivitySort]"
                     ]
                 }
             ],
             "activityReplies": [
-                119,
+                120,
                 {
                     "id": [
                         1
@@ -1763,7 +1838,7 @@ export default {
                 }
             ],
             "threads": [
-                129,
+                130,
                 {
                     "id": [
                         1
@@ -1791,13 +1866,13 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        144,
+                        145,
                         "[ThreadSort]"
                     ]
                 }
             ],
             "threadComments": [
-                131,
+                132,
                 {
                     "id": [
                         1
@@ -1809,7 +1884,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        145,
+                        146,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -1875,7 +1950,7 @@ export default {
                         1
                     ],
                     "type": [
-                        146
+                        147
                     ]
                 }
             ],
@@ -1965,11 +2040,14 @@ export default {
             "donatorTier": [
                 1
             ],
+            "privacy": [
+                99
+            ],
             "donatorBadge": [
                 5
             ],
             "moderatorRoles": [
-                99
+                100
             ],
             "createdAt": [
                 1
@@ -1978,13 +2056,13 @@ export default {
                 1
             ],
             "stats": [
-                100
+                101
             ],
             "moderatorStatus": [
                 5
             ],
             "previousNames": [
-                109
+                110
             ],
             "__typename": [
                 5
@@ -2007,6 +2085,15 @@ export default {
                 11
             ],
             "displayAdultContent": [
+                4
+            ],
+            "includeAdultContentInSearch": [
+                4
+            ],
+            "includeAdultContentInQuickSearch": [
+                4
+            ],
+            "displayAdultActivities": [
                 4
             ],
             "airingNotifications": [
@@ -2349,6 +2436,9 @@ export default {
                 5
             ],
             "averageScore": [
+                1
+            ],
+            "weightedScore": [
                 1
             ],
             "meanScore": [
@@ -3200,6 +3290,9 @@ export default {
             "averageScore": [
                 1
             ],
+            "weightedScore": [
+                1
+            ],
             "popularity": [
                 1
             ],
@@ -4019,6 +4112,7 @@ export default {
                 5
             ]
         },
+        "UserPrivacy": {},
         "ModRole": {},
         "UserStats": {
             "watchedTime": [
@@ -4028,7 +4122,7 @@ export default {
                 1
             ],
             "activityHistory": [
-                101
+                102
             ],
             "animeStatusDistribution": [
                 81
@@ -4043,34 +4137,34 @@ export default {
                 80
             ],
             "animeListScores": [
-                102
+                103
             ],
             "mangaListScores": [
-                102
+                103
             ],
             "favouredGenresOverview": [
-                103
-            ],
-            "favouredGenres": [
-                103
-            ],
-            "favouredTags": [
                 104
             ],
+            "favouredGenres": [
+                104
+            ],
+            "favouredTags": [
+                105
+            ],
             "favouredActors": [
-                105
-            ],
-            "favouredStaff": [
-                105
-            ],
-            "favouredStudios": [
                 106
             ],
-            "favouredYears": [
+            "favouredStaff": [
+                106
+            ],
+            "favouredStudios": [
                 107
             ],
-            "favouredFormats": [
+            "favouredYears": [
                 108
+            ],
+            "favouredFormats": [
+                109
             ],
             "__typename": [
                 5
@@ -4213,64 +4307,64 @@ export default {
         "AiringSort": {},
         "NotificationUnion": {
             "on_AiringNotification": [
-                114
-            ],
-            "on_FollowingNotification": [
                 115
             ],
-            "on_ActivityMessageNotification": [
+            "on_FollowingNotification": [
                 116
             ],
+            "on_ActivityMessageNotification": [
+                117
+            ],
             "on_ActivityMentionNotification": [
-                120
+                121
             ],
             "on_ActivityReplyNotification": [
-                124
-            ],
-            "on_ActivityReplySubscribedNotification": [
                 125
             ],
-            "on_ActivityLikeNotification": [
+            "on_ActivityReplySubscribedNotification": [
                 126
             ],
-            "on_ActivityReplyLikeNotification": [
+            "on_ActivityLikeNotification": [
                 127
             ],
-            "on_ThreadCommentMentionNotification": [
+            "on_ActivityReplyLikeNotification": [
                 128
             ],
-            "on_ThreadCommentReplyNotification": [
-                132
+            "on_ThreadCommentMentionNotification": [
+                129
             ],
-            "on_ThreadCommentSubscribedNotification": [
+            "on_ThreadCommentReplyNotification": [
                 133
             ],
-            "on_ThreadCommentLikeNotification": [
+            "on_ThreadCommentSubscribedNotification": [
                 134
             ],
-            "on_ThreadLikeNotification": [
+            "on_ThreadCommentLikeNotification": [
                 135
             ],
-            "on_RelatedMediaAdditionNotification": [
+            "on_ThreadLikeNotification": [
                 136
             ],
-            "on_MediaDataChangeNotification": [
+            "on_RelatedMediaAdditionNotification": [
                 137
             ],
-            "on_MediaMergeNotification": [
+            "on_MediaDataChangeNotification": [
                 138
             ],
-            "on_MediaDeletionNotification": [
+            "on_MediaMergeNotification": [
                 139
             ],
-            "on_MediaSubmissionUpdateNotification": [
+            "on_MediaDeletionNotification": [
                 140
             ],
-            "on_StaffSubmissionUpdateNotification": [
+            "on_MediaSubmissionUpdateNotification": [
                 141
             ],
-            "on_CharacterSubmissionUpdateNotification": [
+            "on_StaffSubmissionUpdateNotification": [
                 142
+            ],
+            "on_CharacterSubmissionUpdateNotification": [
+                143
             ],
             "__typename": [
                 5
@@ -4345,7 +4439,7 @@ export default {
                 1
             ],
             "message": [
-                117
+                118
             ],
             "user": [
                 7
@@ -4365,7 +4459,7 @@ export default {
                 1
             ],
             "type": [
-                118
+                119
             ],
             "replyCount": [
                 1
@@ -4409,7 +4503,7 @@ export default {
                 7
             ],
             "replies": [
-                119
+                120
             ],
             "likes": [
                 7
@@ -4476,7 +4570,7 @@ export default {
                 1
             ],
             "activity": [
-                121
+                122
             ],
             "user": [
                 7
@@ -4487,13 +4581,13 @@ export default {
         },
         "ActivityUnion": {
             "on_TextActivity": [
-                122
-            ],
-            "on_ListActivity": [
                 123
             ],
+            "on_ListActivity": [
+                124
+            ],
             "on_MessageActivity": [
-                117
+                118
             ],
             "__typename": [
                 5
@@ -4507,7 +4601,7 @@ export default {
                 1
             ],
             "type": [
-                118
+                119
             ],
             "replyCount": [
                 1
@@ -4545,7 +4639,7 @@ export default {
                 7
             ],
             "replies": [
-                119
+                120
             ],
             "likes": [
                 7
@@ -4562,7 +4656,7 @@ export default {
                 1
             ],
             "type": [
-                118
+                119
             ],
             "replyCount": [
                 1
@@ -4601,7 +4695,7 @@ export default {
                 23
             ],
             "replies": [
-                119
+                120
             ],
             "likes": [
                 7
@@ -4630,7 +4724,7 @@ export default {
                 1
             ],
             "activity": [
-                121
+                122
             ],
             "user": [
                 7
@@ -4659,7 +4753,7 @@ export default {
                 1
             ],
             "activity": [
-                121
+                122
             ],
             "user": [
                 7
@@ -4688,7 +4782,7 @@ export default {
                 1
             ],
             "activity": [
-                121
+                122
             ],
             "user": [
                 7
@@ -4717,7 +4811,7 @@ export default {
                 1
             ],
             "activity": [
-                121
+                122
             ],
             "user": [
                 7
@@ -4746,10 +4840,10 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "comment": [
-                131
+                132
             ],
             "user": [
                 7
@@ -4825,7 +4919,7 @@ export default {
                 5
             ],
             "categories": [
-                130
+                131
             ],
             "mediaCategories": [
                 23
@@ -4879,7 +4973,7 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "user": [
                 7
@@ -4917,10 +5011,10 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "comment": [
-                131
+                132
             ],
             "user": [
                 7
@@ -4949,10 +5043,10 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "comment": [
-                131
+                132
             ],
             "user": [
                 7
@@ -4981,10 +5075,10 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "comment": [
-                131
+                132
             ],
             "user": [
                 7
@@ -5013,10 +5107,10 @@ export default {
                 1
             ],
             "thread": [
-                129
+                130
             ],
             "comment": [
-                131
+                132
             ],
             "user": [
                 7
@@ -5213,7 +5307,7 @@ export default {
         "LikeableType": {},
         "MediaListCollection": {
             "lists": [
-                148
+                149
             ],
             "user": [
                 7
@@ -5285,10 +5379,10 @@ export default {
         },
         "SiteStatistics": {
             "users": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5300,10 +5394,10 @@ export default {
                 }
             ],
             "anime": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5315,10 +5409,10 @@ export default {
                 }
             ],
             "manga": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5330,10 +5424,10 @@ export default {
                 }
             ],
             "characters": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5345,10 +5439,10 @@ export default {
                 }
             ],
             "staff": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5360,10 +5454,10 @@ export default {
                 }
             ],
             "studios": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5375,10 +5469,10 @@ export default {
                 }
             ],
             "reviews": [
-                153,
+                154,
                 {
                     "sort": [
-                        152,
+                        153,
                         "[SiteTrendSort]"
                     ],
                     "page": [
@@ -5396,10 +5490,10 @@ export default {
         "SiteTrendSort": {},
         "SiteTrendConnection": {
             "edges": [
-                154
+                155
             ],
             "nodes": [
-                155
+                156
             ],
             "pageInfo": [
                 3
@@ -5410,7 +5504,7 @@ export default {
         },
         "SiteTrendEdge": {
             "node": [
-                155
+                156
             ],
             "__typename": [
                 5
@@ -5444,6 +5538,15 @@ export default {
                     "displayAdultContent": [
                         4
                     ],
+                    "includeAdultContentInSearch": [
+                        4
+                    ],
+                    "includeAdultContentInQuickSearch": [
+                        4
+                    ],
+                    "displayAdultActivities": [
+                        4
+                    ],
                     "airingNotifications": [
                         4
                     ],
@@ -5460,7 +5563,7 @@ export default {
                         5
                     ],
                     "notificationOptions": [
-                        158,
+                        159,
                         "[NotificationOptionInput]"
                     ],
                     "timezone": [
@@ -5470,10 +5573,10 @@ export default {
                         1
                     ],
                     "animeListOptions": [
-                        159
+                        160
                     ],
                     "mangaListOptions": [
-                        159
+                        160
                     ],
                     "staffNameLanguage": [
                         14
@@ -5482,7 +5585,7 @@ export default {
                         4
                     ],
                     "disabledListActivity": [
-                        160,
+                        161,
                         "[ListActivityOptionInput]"
                     ]
                 }
@@ -5535,10 +5638,10 @@ export default {
                         "[Float]"
                     ],
                     "startedAt": [
-                        161
+                        162
                     ],
                     "completedAt": [
-                        161
+                        162
                     ]
                 }
             ],
@@ -5580,10 +5683,10 @@ export default {
                         "[Float]"
                     ],
                     "startedAt": [
-                        161
+                        162
                     ],
                     "completedAt": [
-                        161
+                        162
                     ],
                     "ids": [
                         1,
@@ -5592,7 +5695,7 @@ export default {
                 }
             ],
             "DeleteMediaListEntry": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5600,7 +5703,7 @@ export default {
                 }
             ],
             "DeleteCustomList": [
-                162,
+                163,
                 {
                     "customList": [
                         5
@@ -5611,7 +5714,7 @@ export default {
                 }
             ],
             "SaveTextActivity": [
-                122,
+                123,
                 {
                     "id": [
                         1
@@ -5625,7 +5728,7 @@ export default {
                 }
             ],
             "SaveMessageActivity": [
-                117,
+                118,
                 {
                     "id": [
                         1
@@ -5648,7 +5751,7 @@ export default {
                 }
             ],
             "SaveListActivity": [
-                123,
+                124,
                 {
                     "id": [
                         1
@@ -5659,7 +5762,7 @@ export default {
                 }
             ],
             "DeleteActivity": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5667,7 +5770,7 @@ export default {
                 }
             ],
             "ToggleActivityPin": [
-                121,
+                122,
                 {
                     "id": [
                         1
@@ -5678,7 +5781,7 @@ export default {
                 }
             ],
             "ToggleActivitySubscription": [
-                121,
+                122,
                 {
                     "activityId": [
                         1
@@ -5689,7 +5792,7 @@ export default {
                 }
             ],
             "SaveActivityReply": [
-                119,
+                120,
                 {
                     "id": [
                         1
@@ -5706,7 +5809,7 @@ export default {
                 }
             ],
             "DeleteActivityReply": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5720,22 +5823,30 @@ export default {
                         1
                     ],
                     "type": [
-                        146
+                        147
                     ]
                 }
             ],
             "ToggleLikeV2": [
-                163,
+                164,
                 {
                     "id": [
                         1
                     ],
                     "type": [
-                        146
+                        147
                     ]
                 }
             ],
             "ToggleFollow": [
+                7,
+                {
+                    "userId": [
+                        1
+                    ]
+                }
+            ],
+            "DeleteFollower": [
                 7,
                 {
                     "userId": [
@@ -5832,7 +5943,7 @@ export default {
                 }
             ],
             "DeleteReview": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5865,7 +5976,7 @@ export default {
                 }
             ],
             "SaveThread": [
-                129,
+                130,
                 {
                     "id": [
                         1
@@ -5893,7 +6004,7 @@ export default {
                 }
             ],
             "DeleteThread": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5901,7 +6012,7 @@ export default {
                 }
             ],
             "ToggleThreadSubscription": [
-                129,
+                130,
                 {
                     "threadId": [
                         1
@@ -5912,7 +6023,7 @@ export default {
                 }
             ],
             "SaveThreadComment": [
-                131,
+                132,
                 {
                     "id": [
                         1
@@ -5932,7 +6043,7 @@ export default {
                 }
             ],
             "DeleteThreadComment": [
-                162,
+                163,
                 {
                     "id": [
                         1
@@ -5960,7 +6071,7 @@ export default {
                 9,
                 {
                     "highlights": [
-                        164,
+                        165,
                         "[AniChartHighlightInput]"
                     ]
                 }
@@ -6038,22 +6149,22 @@ export default {
         },
         "LikeableUnion": {
             "on_ListActivity": [
-                123
+                124
             ],
             "on_TextActivity": [
-                122
+                123
             ],
             "on_MessageActivity": [
-                117
+                118
             ],
             "on_ActivityReply": [
-                119
+                120
             ],
             "on_Thread": [
-                129
+                130
             ],
             "on_ThreadComment": [
-                131
+                132
             ],
             "__typename": [
                 5
@@ -6070,9 +6181,10 @@ export default {
                 5
             ]
         },
+        "ID": {},
         "InternalPage": {
             "mediaSubmissions": [
-                168,
+                170,
                 {
                     "mediaId": [
                         1
@@ -6087,19 +6199,19 @@ export default {
                         1
                     ],
                     "status": [
-                        166
+                        168
                     ],
                     "type": [
                         25
                     ],
                     "sort": [
-                        167,
+                        169,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "characterSubmissions": [
-                172,
+                174,
                 {
                     "characterId": [
                         1
@@ -6111,16 +6223,16 @@ export default {
                         1
                     ],
                     "status": [
-                        166
+                        168
                     ],
                     "sort": [
-                        167,
+                        169,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "staffSubmissions": [
-                173,
+                175,
                 {
                     "staffId": [
                         1
@@ -6132,16 +6244,16 @@ export default {
                         1
                     ],
                     "status": [
-                        166
+                        168
                     ],
                     "sort": [
-                        167,
+                        169,
                         "[SubmissionSort]"
                     ]
                 }
             ],
             "revisionHistory": [
-                174,
+                176,
                 {
                     "userId": [
                         1
@@ -6161,7 +6273,7 @@ export default {
                 }
             ],
             "reports": [
-                176,
+                178,
                 {
                     "reporterId": [
                         1
@@ -6172,7 +6284,7 @@ export default {
                 }
             ],
             "modActions": [
-                177,
+                179,
                 {
                     "userId": [
                         1
@@ -6198,6 +6310,14 @@ export default {
                 {
                     "search": [
                         5
+                    ]
+                }
+            ],
+            "recentlyRepliedActivities": [
+                122,
+                {
+                    "userId": [
+                        1
                     ]
                 }
             ],
@@ -6235,10 +6355,10 @@ export default {
                         1
                     ],
                     "startDate": [
-                        110
+                        111
                     ],
                     "endDate": [
-                        110
+                        111
                     ],
                     "season": [
                         29
@@ -6294,6 +6414,9 @@ export default {
                     "averageScore": [
                         1
                     ],
+                    "weightedScore": [
+                        1
+                    ],
                     "popularity": [
                         1
                     ],
@@ -6332,19 +6455,19 @@ export default {
                         "[Int]"
                     ],
                     "startDate_greater": [
-                        110
+                        111
                     ],
                     "startDate_lesser": [
-                        110
+                        111
                     ],
                     "startDate_like": [
                         5
                     ],
                     "endDate_greater": [
-                        110
+                        111
                     ],
                     "endDate_lesser": [
-                        110
+                        111
                     ],
                     "endDate_like": [
                         5
@@ -6434,6 +6557,15 @@ export default {
                         1
                     ],
                     "averageScore_lesser": [
+                        1
+                    ],
+                    "weightedScore_not": [
+                        1
+                    ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
                         1
                     ],
                     "popularity_not": [
@@ -6575,10 +6707,10 @@ export default {
                         5
                     ],
                     "startedAt": [
-                        110
+                        111
                     ],
                     "completedAt": [
-                        110
+                        111
                     ],
                     "compareWithAuthList": [
                         4
@@ -6610,25 +6742,25 @@ export default {
                         5
                     ],
                     "startedAt_greater": [
-                        110
+                        111
                     ],
                     "startedAt_lesser": [
-                        110
+                        111
                     ],
                     "startedAt_like": [
                         5
                     ],
                     "completedAt_greater": [
-                        110
+                        111
                     ],
                     "completedAt_lesser": [
-                        110
+                        111
                     ],
                     "completedAt_like": [
                         5
                     ],
                     "sort": [
-                        111,
+                        112,
                         "[MediaListSort]"
                     ]
                 }
@@ -6697,7 +6829,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        112,
+                        113,
                         "[AiringSort]"
                     ]
                 }
@@ -6715,6 +6847,9 @@ export default {
                         1
                     ],
                     "averageScore": [
+                        1
+                    ],
+                    "weightedScore": [
                         1
                     ],
                     "popularity": [
@@ -6761,6 +6896,15 @@ export default {
                     "averageScore_not": [
                         1
                     ],
+                    "weightedScore_greater": [
+                        1
+                    ],
+                    "weightedScore_lesser": [
+                        1
+                    ],
+                    "weightedScore_not": [
+                        1
+                    ],
                     "popularity_greater": [
                         1
                     ],
@@ -6786,7 +6930,7 @@ export default {
                 }
             ],
             "notifications": [
-                113,
+                114,
                 {
                     "type": [
                         13
@@ -6826,8 +6970,21 @@ export default {
                     ]
                 }
             ],
+            "mutualFollowers": [
+                7,
+                {
+                    "userId": [
+                        1,
+                        "Int!"
+                    ],
+                    "sort": [
+                        6,
+                        "[UserSort]"
+                    ]
+                }
+            ],
             "activities": [
-                121,
+                122,
                 {
                     "id": [
                         1
@@ -6842,7 +6999,7 @@ export default {
                         1
                     ],
                     "type": [
-                        118
+                        119
                     ],
                     "isFollowing": [
                         4
@@ -6901,14 +7058,14 @@ export default {
                         "[Int]"
                     ],
                     "type_not": [
-                        118
+                        119
                     ],
                     "type_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "type_not_in": [
-                        118,
+                        119,
                         "[ActivityType]"
                     ],
                     "createdAt_greater": [
@@ -6918,13 +7075,13 @@ export default {
                         1
                     ],
                     "sort": [
-                        143,
+                        144,
                         "[ActivitySort]"
                     ]
                 }
             ],
             "activityReplies": [
-                119,
+                120,
                 {
                     "id": [
                         1
@@ -6935,7 +7092,7 @@ export default {
                 }
             ],
             "threads": [
-                129,
+                130,
                 {
                     "id": [
                         1
@@ -6963,13 +7120,13 @@ export default {
                         "[Int]"
                     ],
                     "sort": [
-                        144,
+                        145,
                         "[ThreadSort]"
                     ]
                 }
             ],
             "threadComments": [
-                131,
+                132,
                 {
                     "id": [
                         1
@@ -6981,7 +7138,7 @@ export default {
                         1
                     ],
                     "sort": [
-                        145,
+                        146,
                         "[ThreadCommentSort]"
                     ]
                 }
@@ -7047,7 +7204,7 @@ export default {
                         1
                     ],
                     "type": [
-                        146
+                        147
                     ]
                 }
             ],
@@ -7068,7 +7225,7 @@ export default {
                 7
             ],
             "status": [
-                166
+                168
             ],
             "submitterStats": [
                 9
@@ -7092,19 +7249,19 @@ export default {
                 23
             ],
             "characters": [
-                169
+                171
             ],
             "staff": [
-                169
+                171
             ],
             "studios": [
-                169
+                171
             ],
             "relations": [
                 22
             ],
             "externalLinks": [
-                169
+                171
             ],
             "createdAt": [
                 1
@@ -7115,10 +7272,10 @@ export default {
         },
         "MediaSubmissionComparison": {
             "submission": [
-                170
+                172
             ],
             "character": [
-                171
+                173
             ],
             "staff": [
                 50
@@ -7229,7 +7386,7 @@ export default {
                 7
             ],
             "status": [
-                166
+                168
             ],
             "notes": [
                 5
@@ -7264,7 +7421,7 @@ export default {
                 7
             ],
             "status": [
-                166
+                168
             ],
             "notes": [
                 5
@@ -7287,7 +7444,7 @@ export default {
                 1
             ],
             "action": [
-                175
+                177
             ],
             "changes": [
                 9
@@ -7337,6 +7494,9 @@ export default {
             "cleared": [
                 4
             ],
+            "assignee": [
+                7
+            ],
             "__typename": [
                 5
             ]
@@ -7352,7 +7512,7 @@ export default {
                 7
             ],
             "type": [
-                178
+                180
             ],
             "objectId": [
                 1
@@ -7438,10 +7598,10 @@ export default {
         },
         "CharacterSubmissionConnection": {
             "edges": [
-                184
+                186
             ],
             "nodes": [
-                172
+                174
             ],
             "pageInfo": [
                 3
@@ -7452,7 +7612,7 @@ export default {
         },
         "CharacterSubmissionEdge": {
             "node": [
-                172
+                174
             ],
             "role": [
                 36
@@ -7461,7 +7621,7 @@ export default {
                 45
             ],
             "submittedVoiceActors": [
-                173
+                175
             ],
             "__typename": [
                 5
@@ -7488,20 +7648,20 @@ export default {
             ]
         },
         "UserModData": {
-            "alts": [
-                7
-            ],
             "bans": [
                 9
+            ],
+            "browserAlts": [
+                7
             ],
             "ip": [
                 9
             ],
+            "ipAlts": [
+                7
+            ],
             "counts": [
                 9
-            ],
-            "privacy": [
-                1
             ],
             "email": [
                 5
@@ -7509,7 +7669,6 @@ export default {
             "__typename": [
                 5
             ]
-        },
-        "ID": {}
+        }
     }
 }

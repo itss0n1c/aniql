@@ -79,6 +79,9 @@ type Query {
     """Filter by the media's average score"""
     averageScore: Int
 
+    """Filter by the media's average score"""
+    weightedScore: Int
+
     """Filter by the number of users with this media on their list"""
     popularity: Int
 
@@ -209,6 +212,15 @@ type Query {
     """Filter by the media's average score"""
     averageScore_lesser: Int
 
+    """Filter by the media's average score"""
+    weightedScore_not: Int
+
+    """Filter by the media's average score"""
+    weightedScore_greater: Int
+
+    """Filter by the media's average score"""
+    weightedScore_lesser: Int
+
     """Filter by the number of users with this media on their list"""
     popularity_not: Int
 
@@ -244,6 +256,9 @@ type Query {
 
     """Filter by score"""
     averageScore: Int
+
+    """Filter by weighted scores"""
+    weightedScore: Int
 
     """Filter by popularity"""
     popularity: Int
@@ -286,6 +301,15 @@ type Query {
 
     """Filter by score"""
     averageScore_not: Int
+
+    """Filter by weighted scores"""
+    weightedScore_greater: Int
+
+    """Filter by weighted scores"""
+    weightedScore_lesser: Int
+
+    """Filter by weighted scores"""
+    weightedScore_not: Int
 
     """Filter by popularity"""
     popularity_greater: Int
@@ -763,6 +787,15 @@ type Query {
     sort: [UserSort]
   ): User
 
+  """Mutual follower query"""
+  MutualFollower(
+    """User id to fetch mutual followers for"""
+    userId: Int!
+
+    """The order the results will be returned in"""
+    sort: [UserSort]
+  ): User
+
   """Thread query"""
   Thread(
     """Filter by the thread id"""
@@ -959,6 +992,9 @@ type Page {
     """Filter by the media's average score"""
     averageScore: Int
 
+    """Filter by the media's average score"""
+    weightedScore: Int
+
     """Filter by the number of users with this media on their list"""
     popularity: Int
 
@@ -1088,6 +1124,15 @@ type Page {
 
     """Filter by the media's average score"""
     averageScore_lesser: Int
+
+    """Filter by the media's average score"""
+    weightedScore_not: Int
+
+    """Filter by the media's average score"""
+    weightedScore_greater: Int
+
+    """Filter by the media's average score"""
+    weightedScore_lesser: Int
 
     """Filter by the number of users with this media on their list"""
     popularity_not: Int
@@ -1324,6 +1369,9 @@ type Page {
     """Filter by score"""
     averageScore: Int
 
+    """Filter by weighted scores"""
+    weightedScore: Int
+
     """Filter by popularity"""
     popularity: Int
 
@@ -1366,6 +1414,15 @@ type Page {
     """Filter by score"""
     averageScore_not: Int
 
+    """Filter by weighted scores"""
+    weightedScore_greater: Int
+
+    """Filter by weighted scores"""
+    weightedScore_lesser: Int
+
+    """Filter by weighted scores"""
+    weightedScore_not: Int
+
     """Filter by popularity"""
     popularity_greater: Int
 
@@ -1406,6 +1463,13 @@ type Page {
   ): [User]
   following(
     """User id of the follower/followed"""
+    userId: Int!
+
+    """The order the results will be returned in"""
+    sort: [UserSort]
+  ): [User]
+  mutualFollowers(
+    """User id to fetch mutual followers for"""
     userId: Int!
 
     """The order the results will be returned in"""
@@ -1684,6 +1748,9 @@ type User {
   """The donation tier of the user"""
   donatorTier: Int
 
+  """The user's account privacy setting"""
+  privacy: UserPrivacy
+
   """Custom donation badge text"""
   donatorBadge: String
 
@@ -1727,6 +1794,21 @@ type UserOptions {
 
   """Whether the user has enabled viewing of 18+ content"""
   displayAdultContent: Boolean
+
+  """
+  Whether the user wants to see adult media in search results by default. Sub-option of displayAdultContent
+  """
+  includeAdultContentInSearch: Boolean
+
+  """
+  Whether the user wants to see adult media in quick search results by default. Sub-option of displayAdultContent
+  """
+  includeAdultContentInQuickSearch: Boolean
+
+  """
+  Whether the user wants to see others' activities for adult media. Sub-option of displayAdultContent
+  """
+  displayAdultActivities: Boolean
 
   """
   Whether the user receives notifications when a show they are watching aires
@@ -1957,7 +2039,7 @@ type MediaListTypeOptions {
   splitCompletedSectionByFormat: Boolean
 
   """The list theme options"""
-  theme: Json @deprecated(reason: "This field has not yet been fully implemented and may change without warning")
+  theme: Json @deprecated(reason: "No longer used")
 
   """The names of the user's custom lists"""
   customLists: [String]
@@ -2162,8 +2244,11 @@ type Media {
   """Alternative titles of the media"""
   synonyms: [String]
 
-  """A weighted average score of all the user's scores of the media"""
-  averageScore: Int
+  """A weighted average score of all the users' scores of the media"""
+  averageScore: Int @deprecated(reason: "Use weightedScore")
+
+  """A weighted average score of all the users' scores of the media"""
+  weightedScore: Int
 
   """Mean score of all the user's scores of the media"""
   meanScore: Int
@@ -3124,7 +3209,10 @@ type MediaTrend {
   trending: Int!
 
   """A weighted average score of all the user's scores of the media"""
-  averageScore: Int
+  averageScore: Int @deprecated(reason: "Use weightedScore")
+
+  """A weighted average score of all the user's scores of the media"""
+  weightedScore: Int
 
   """The number of users with the media on their list"""
   popularity: Int
@@ -3465,7 +3553,7 @@ type AiringProgression {
   """
   episode: Float
 
-  """The average score for the media"""
+  """The weighted average score for the media"""
   score: Float
 
   """The amount of users watching the anime"""
@@ -3663,6 +3751,18 @@ type UserStudioStatistic {
   chaptersRead: Int!
   mediaIds: [Int]!
   studio: Studio
+}
+
+"""User's account privacy setting"""
+enum UserPrivacy {
+  """Public user"""
+  PUBLIC
+
+  """Semi-Public user"""
+  SEMI_PUBLIC
+
+  """Private user"""
+  PRIVATE
 }
 
 """Mod role enums"""
@@ -4980,6 +5080,17 @@ type Mutation {
     """If the user should see media marked as adult-only"""
     displayAdultContent: Boolean
 
+    """If the user should see media marked as adult-only in search results"""
+    includeAdultContentInSearch: Boolean
+
+    """
+    If the user should see media marked as adult-only in quick search results
+    """
+    includeAdultContentInQuickSearch: Boolean
+
+    """If the user should see others' activities for media marked as adult"""
+    displayAdultActivities: Boolean
+
     """
     If the user should get notifications when a show they are watching aires
     """
@@ -4994,7 +5105,7 @@ type Mutation {
     """Profile highlight color"""
     profileColor: String
 
-    """Profile highlight color (Max: 24)"""
+    """User's donator badge, only displayed for donators (Max: 24)"""
     donatorBadge: String
 
     """Notification options"""
@@ -5255,6 +5366,12 @@ type Mutation {
     userId: Int
   ): User
 
+  """Removes a follower"""
+  DeleteFollower(
+    """The id of the user to remove the follower status of"""
+    userId: Int
+  ): User
+
   """
   Favourite or unfavourite an anime, manga, character, staff member, or studio
   """
@@ -5364,7 +5481,7 @@ type Mutation {
     """The title of the thread (Min: 6, Max: 120)"""
     title: String
 
-    """The main text body of the thread (Max: 30000)"""
+    """The main text body of the thread (Min: 10, Max: 30000)"""
     body: String
 
     """Forum categories the thread should be within"""
@@ -5558,6 +5675,10 @@ type InternalPage {
     """Filter by search query"""
     search: String
   ): [User]
+  recentlyRepliedActivities(
+    """Filter by the owner user id"""
+    userId: Int
+  ): [ActivityUnion]
 
   """The pagination information"""
   pageInfo: PageInfo
@@ -5647,6 +5768,9 @@ type InternalPage {
 
     """Filter by the media's average score"""
     averageScore: Int
+
+    """Filter by the media's average score"""
+    weightedScore: Int
 
     """Filter by the number of users with this media on their list"""
     popularity: Int
@@ -5777,6 +5901,15 @@ type InternalPage {
 
     """Filter by the media's average score"""
     averageScore_lesser: Int
+
+    """Filter by the media's average score"""
+    weightedScore_not: Int
+
+    """Filter by the media's average score"""
+    weightedScore_greater: Int
+
+    """Filter by the media's average score"""
+    weightedScore_lesser: Int
 
     """Filter by the number of users with this media on their list"""
     popularity_not: Int
@@ -6013,6 +6146,9 @@ type InternalPage {
     """Filter by score"""
     averageScore: Int
 
+    """Filter by weighted scores"""
+    weightedScore: Int
+
     """Filter by popularity"""
     popularity: Int
 
@@ -6055,6 +6191,15 @@ type InternalPage {
     """Filter by score"""
     averageScore_not: Int
 
+    """Filter by weighted scores"""
+    weightedScore_greater: Int
+
+    """Filter by weighted scores"""
+    weightedScore_lesser: Int
+
+    """Filter by weighted scores"""
+    weightedScore_not: Int
+
     """Filter by popularity"""
     popularity_greater: Int
 
@@ -6095,6 +6240,13 @@ type InternalPage {
   ): [User]
   following(
     """User id of the follower/followed"""
+    userId: Int!
+
+    """The order the results will be returned in"""
+    sort: [UserSort]
+  ): [User]
+  mutualFollowers(
+    """User id to fetch mutual followers for"""
     userId: Int!
 
     """The order the results will be returned in"""
@@ -6484,6 +6636,7 @@ type Report {
   """When the entry data was created"""
   createdAt: Int
   cleared: Boolean
+  assignee: User
 }
 
 type ModAction {
@@ -6602,10 +6755,10 @@ input StaffNameInput {
 
 """User data for moderators"""
 type UserModData {
-  alts: [User]
   bans: Json
+  browserAlts: [User]
   ip: Json
+  ipAlts: [User]
   counts: Json
-  privacy: Int
   email: String
 }
