@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: necessary for genql */
 import type { FieldsSelection, Mutation, MutationGenqlSelection, Query, QueryGenqlSelection } from './genql/index.ts';
-import { type ClientOptions, createFetcher, generateGraphqlOperation, linkTypeMap } from './genql/runtime/index.ts';
+import { createFetcher, generateGraphqlOperation, linkTypeMap } from './genql/runtime/index.ts';
 import types from './genql/types.ts';
 
 export type Awaitable<T> = Promise<T> | T;
@@ -22,17 +22,19 @@ export interface AniQLAuthResToken extends AniQLAuthBase {
 export type AniQLAuth = AniQLAuthResCode | AniQLAuthResToken;
 
 /** Options for the AniQL client. */
-export interface AniQLOptions extends ClientOptions {
+export interface AniQLOptions {
 	/** Optional AniList app ID for clients that don't use the OAuth helpers. */
 	client_id?: number;
 	auth?: AniQLAuth;
 	token?: string;
 	get_token?: () => Awaitable<string | undefined>;
+	signal?: AbortSignal;
 }
 
 /** Options for the request made by the AniQL client. */
 export interface AniQLRequestOptions {
 	token?: string;
+	signal?: AbortSignal;
 }
 
 const typeMap = linkTypeMap(types as any);
@@ -42,7 +44,7 @@ if (!typeMapQuery || !typeMapMutation) throw new Error('Query or Mutation root i
 
 const _make_query = <R extends QueryGenqlSelection>(request: R & { __name?: string }) =>
 	generateGraphqlOperation('query', typeMapQuery, request as any);
-const _make_mutation = <R extends QueryGenqlSelection>(request: R & { __name?: string }) =>
+const _make_mutation = <R extends MutationGenqlSelection>(request: R & { __name?: string }) =>
 	generateGraphqlOperation('mutation', typeMapMutation, request as any);
 
 /**
@@ -126,7 +128,7 @@ export class AniQLClient {
 		opts?: AniQLRequestOptions,
 	): Promise<FieldsSelection<Query, R>> {
 		const operation = _make_query(request);
-		return this.#_fetcher(opts?.token)(operation);
+		return this.#_fetcher(opts)(operation);
 	}
 
 	async mutation<R extends MutationGenqlSelection>(
@@ -134,16 +136,18 @@ export class AniQLClient {
 		opts?: AniQLRequestOptions,
 	): Promise<FieldsSelection<Mutation, R>> {
 		const operation = _make_mutation(request);
-		return this.#_fetcher(opts?.token)(operation);
+		return this.#_fetcher(opts)(operation);
 	}
 
 	make_query = <R extends QueryGenqlSelection>(request: R & { __name?: string }) => request;
 	make_mutation = <R extends MutationGenqlSelection>(request: R & { __name?: string }) => request;
 
-	#_fetcher(_token?: string) {
+	#_fetcher(opts?: AniQLRequestOptions) {
 		return createFetcher({
 			fetcher: async (operation) => {
-				const token = _token ?? (await this.#_opts.get_token?.()) ?? this.#_opts.token;
+				const signal = opts?.signal ?? this.#_opts.signal;
+				signal?.throwIfAborted();
+				const token = opts?.token ?? (await this.#_opts.get_token?.()) ?? this.#_opts.token;
 				let res: Response;
 				try {
 					res = await fetch(AniQLClient.base_url, {
@@ -154,6 +158,7 @@ export class AniQLClient {
 							...(token ? { Authorization: `Bearer ${token}` } : {}),
 						},
 						body: JSON.stringify(operation),
+						signal,
 					});
 				} catch (e) {
 					if (e instanceof TypeError) {
@@ -216,6 +221,7 @@ export class AniQLClient {
 			throw new AniQLClientError(400, 'auth_exchange is only valid for response_type "code"');
 		const res = await fetch('https://anilist.co/api/v2/oauth/token', {
 			method: 'POST',
+			signal: this.#_opts.signal,
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
