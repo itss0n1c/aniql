@@ -15,14 +15,12 @@
 
 ## Usage
 
-`aniql` is available via server-side (Bun & Node.js), as well as in browser.
+`aniql` is ESM-only and works in Bun, modern Node.js, and browsers with `fetch`.
 
 ```ts
 import { AniQLClient } from 'aniql';
 
-const client = new AniQLClient({
-	token: Bun.env.TOKEN,
-});
+const client = new AniQLClient(); // `new AniQLClient({ client_id: 123 })` also works
 
 const user = await client.query({
 	User: {
@@ -37,6 +35,15 @@ const user = await client.query({
 });
 console.log(user.User);
 ```
+
+Public AniList queries don't require OAuth or send a client ID. If you already
+have an access token, use `new AniQLClient({ token: accessToken })`, or provide
+`get_token: () => accessToken` if it can change. Pass `{ token }` as the second
+argument to `query` or `mutation` to override the client token for one request.
+Both the client and individual requests accept an `AbortSignal` via `signal`.
+
+Set `auth` only if you use `auth_url` or `auth_exchange`. For OAuth code
+exchange, keep the client secret on your server.
 
 ## Note
 
