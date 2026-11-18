@@ -23,7 +23,10 @@ export type AniQLAuth = AniQLAuthResCode | AniQLAuthResToken;
 
 /** Options for the AniQL client. */
 export interface AniQLOptions extends ClientOptions {
-	auth: AniQLAuth;
+	/** Optional AniList app ID for clients that don't use the OAuth helpers. */
+	client_id?: number;
+	auth?: AniQLAuth;
+	token?: string;
 	get_token?: () => Awaitable<string | undefined>;
 }
 
@@ -114,7 +117,7 @@ export class AniQLClient {
 		this.#_rate_limit_send(data);
 	}
 
-	constructor(opts: AniQLOptions) {
+	constructor(opts: AniQLOptions = {}) {
 		this.#_opts = opts;
 	}
 
@@ -140,7 +143,7 @@ export class AniQLClient {
 	#_fetcher(_token?: string) {
 		return createFetcher({
 			fetcher: async (operation) => {
-				const token = _token ?? (await this.#_opts?.get_token?.());
+				const token = _token ?? (await this.#_opts.get_token?.()) ?? this.#_opts.token;
 				let res: Response;
 				try {
 					res = await fetch(AniQLClient.base_url, {
@@ -199,6 +202,7 @@ export class AniQLClient {
 
 	get auth_url() {
 		const auth = this.#_opts.auth;
+		if (!auth) throw new AniQLClientError(400, 'OAuth configuration is required to get an authorization URL');
 		const url = new URL('https://anilist.co/api/v2/oauth/authorize');
 		url.searchParams.append('client_id', auth.client_id.toString());
 		url.searchParams.append('response_type', auth.response_type);
@@ -208,7 +212,7 @@ export class AniQLClient {
 
 	async auth_exchange(code: string) {
 		const auth = this.#_opts.auth;
-		if (auth.response_type !== 'code')
+		if (auth?.response_type !== 'code')
 			throw new AniQLClientError(400, 'auth_exchange is only valid for response_type "code"');
 		const res = await fetch('https://anilist.co/api/v2/oauth/token', {
 			method: 'POST',
