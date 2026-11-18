@@ -1,8 +1,9 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
-		"includes": ["**", "!!dist", "!!docs", "!!**/genql/*"]
+		"includes": ["**", "!!dist", "!!docs", "!!**/genql/*", "!!.delta"],
+		"ignoreUnknown": true
 	},
 	"formatter": {
 		"enabled": true,
@@ -32,6 +33,9 @@
 					"fix": "safe"
 				},
 				"useImportExtensions": "error"
+			},
+			"complexity": {
+				"noThisInStatic": "off"
 			},
 			"style": {
 				"noParameterAssign": "off",

@@ -18,22 +18,22 @@
 `aniql` is available via server-side (Bun & Node.js), as well as in browser.
 
 ```ts
-import { AniQLClient } from "aniql";
+import { AniQLClient } from 'aniql';
 
 const client = new AniQLClient({
-  token: Bun.env.TOKEN,
+	token: Bun.env.TOKEN,
 });
 
 const user = await client.query({
-  User: {
-    __args: { name: "itss0n1c" },
-    id: true,
-    name: true,
-    avatar: {
-      large: true,
-      medium: true,
-    },
-  },
+	User: {
+		__args: { name: 'itss0n1c' },
+		id: true,
+		name: true,
+		avatar: {
+			large: true,
+			medium: true,
+		},
+	},
 });
 console.log(user.User);
 ```

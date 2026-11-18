@@ -32,14 +32,13 @@
 		"build": "bun build:lib && bun build:docs"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "2.6.8",
 		"@genql/cli": "6.3.4",
-		"@types/bun": "1.4.2",
-		"@typescript/native": "npm:typescript@7.0.2",
-		"arkenv": "0.12.2",
-		"arktype": "2.2.7",
-		"tsdown": "0.23.0",
-		"typedoc-github-theme": "0.4.0",
-		"typescript": "~6.0.0"
+		"@types/bun": "1.4.4",
+		"@arkenv/core": "1.0.0-rc.4",
+		"arktype": "2.2.9",
+		"tsdown": "0.23.7",
+		"typedoc-github-theme": "0.4.0"
 	},
 	"repository": {
 		"type": "git",

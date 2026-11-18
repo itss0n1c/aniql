@@ -1,5 +1,5 @@
 import { test } from 'bun:test';
-import arkenv from 'arkenv';
+import { arkenv } from '@arkenv/core';
 import { AniQLClient, type UserGenqlSelection } from './index.ts';
 
 const env = arkenv({
